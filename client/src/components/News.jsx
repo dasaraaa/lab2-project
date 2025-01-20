@@ -43,8 +43,8 @@ const news = [
 
 const News = () => {
   return (
-    <div className='py-16'>
-      <h2 className='text-3xl font-semibold mb-6'>News about UBT Inventory</h2>
+    <div className='py-16 bg-gray-100'>
+      <h2 className='text-3xl font-semibold  mb-6'>News about UBT Inventory</h2>
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
