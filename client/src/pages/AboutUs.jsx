@@ -1,5 +1,5 @@
 import React from 'react';
-import video from "../assets/images/video.mp4"
+import video from "../assets/images/videoo.mp4"
 import Header from '../components/Header';
 import f1 from "../assets/images/f1.jpg"
 import f2 from "../assets/images/f2.jpg"
@@ -8,44 +8,41 @@ import Footer from '../components/Footer';
 const posts = [
     {
       id: 1,
-      title: 'Luxury in Every Spray',
+      title: 'Students',
       href: '#',
       description:
-      "The attention to detail in each perfume is unmatched. I feel like I’m wrapped in luxury every time I wear one",
+      "The inventory system has made it so much easier for us to find and request the equipment we need for our projects and labs. The process is straightforward, and we get updates on our requests instantly.",
       datetime: '2020-03-16',
       date: 'Mar 16, 2020',
       author: {
         name: 'Lily Divine',
-        role: 'Co-Founder / CTO',
         imageUrl: f1,
       },
     },
     {
         id: 1,
-        title: 'The Most Complimented Fragrance',
+        title: 'Staff',
         href: '#',
         description:
-          'The quality and elegance of Lilia Beauty’s perfumes are evident in every spray. ',
+          'Managing department supplies used to be a headache, but with this system, everything is organized and at our fingertips. I can quickly check what we have and plan accordingly ',
         date: 'Aug 11, 2022',
         datetime: '2020-03-16',
         author: {
           name: 'Ela Frey',
-          role: ' CTO',
           href: '#',
           imageUrl:f2,
         },
       },
       {
         id: 1,
-        title: 'Captivating from Start to Finish',
+        title: 'Administrator',
         href: '#',
         description:
-          'From the first whiff to the lasting impression, Lilia Beauty’s fragrances are simply captivating.',
+          'This system has revolutionized how we manage inventory across the university. The detailed reports and analytics help us make better decisions about resource allocation.',
         date: 'Dec 16, 2020',
         datetime: '2024-03-19',
         author: {
           name: 'Dua Zein',
-          role: 'Designer',
           href: '#',
           imageUrl:f3,
         },
@@ -55,22 +52,22 @@ const posts = [
 const people = [
     {
       name: 'Leslie Alexander',
-      role: 'Inventory Manager',
+      role: 'Visionary Developer',
       image: f1       
     },
     {
         name: 'Leslie Alexander',
-        role: 'System Administrator',
+        role: 'Expert Analyst',
         image: f2  
       },
       {
         name: 'Leslie Alexander',
-        role: ' Departmental Representativ',
+        role: ' Support Specialist',
         image:f3          
       },
       {
         name: 'Leslie Alexander',
-        role: 'Inventory Auditor',
+        role: 'Collaborative Leader',
         image:
           'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
           
@@ -97,8 +94,8 @@ function AboutUs() {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Us - UBT Inventory</h1>
-              <p className="mt-6 text-xl leading-8 text-gray-700">The UBT Inventory system is designed to efficiently manage resources across the university, from classroom supplies to lab equipment, providing students and faculty with the tools they need for academic and research success. </p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Us - UBT Inventory System</h1>
+              <p className="mt-6 text-xl leading-8 text-gray-700">Our mission is to provide universities with an intuitive and reliable system that simplifies the tracking, monitoring, and maintenance of inventory. We aim to support educational institutions in their quest for operational excellence, allowing them to focus on what matters most: fostering knowledge and innovation.</p>
             </div>
           </div>
         </div>
@@ -109,18 +106,17 @@ function AboutUs() {
           <div className="lg:pr-4">
             <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
-              <p className="text-base font-semibold leading-7 text-blue-900">How the Inventory System works?</p>
                 <li className="flex gap-x-3">
                   
-                  <span><strong className="font-semibold text-gray-900">Inventory Items</strong> The inventory items are added to the system by the Inventory Management Team, which ensures that all university assets are properly recorded and categorized.</span>
+                  <span><strong className="font-semibold text-gray-900">Comprehensive Inventory Tracking. </strong>From laboratory equipment to classroom supplies, our system ensures all assets are accurately logged and easily accessible.</span>
                 </li>
                 <li className="flex gap-x-3">
                   
-                  <span><strong className="font-semibold text-gray-900">Accessible 24/7.</strong> The catalog provides a comprehensive view of all available inventory items. Users can access the catalog at any time, from any device, and browse through categories such as furniture, electronics, equipment, and more </span>
+                  <span><strong className="font-semibold text-gray-900">User-Friendly Interface. </strong>Designed with simplicity in mind, our platform is easy to navigate for administrators, staff, and other users. </span>
                 </li>
                 <li className="flex gap-x-3">
                   
-                  <span><strong className="font-semibold text-gray-900">Maintenance and Support. </strong> Users can report any issues with inventory items directly through the system, which helps the inventory team maintain the quality and condition of all assets.</span>
+                  <span><strong className="font-semibold text-gray-900">Flexible Customization. </strong>  Adapt the system to meet your university’s specific requirements. </span>
                 </li>
               </ul>
               
@@ -128,12 +124,13 @@ function AboutUs() {
           </div>
         </div>
       </div>
-      <div className="bg-blue-50 py-24 sm:py-32">
+      <div className="bg-blue-100 py-24 sm:py-32">
       <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet the team.</h2>
-          <p className="mt-6 text-lg leading-8 text-gray-800">
-          The university inventory system is typically managed by a dedicated team or department responsible for overseeing the proper functioning, maintenance, and tracking of university assets.
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet our team.</h2>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper
+            suspendisse.
           </p>
         </div>
         <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
@@ -143,12 +140,52 @@ function AboutUs() {
                 <img alt="" src={person.image} className="h-16 w-16 rounded-full" />
                 <div>
                   <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">{person.name}</h3>
-                  <p className="text-sm font-semibold leading-6 text-blue-800">{person.role}</p>
                 </div>
               </div>
             </li>
           ))}
         </ul>
+      </div>
+    </div>
+    <div className="bg-blue-200 py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:mx-0">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Experiences with out Inventory System</h2>
+          
+        </div>
+        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-400 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          {posts.map((post) => (
+            <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
+              <div className="flex items-center gap-x-4 text-xs">
+                <time dateTime={post.datetime} className="text-gray-500">
+                  {post.date}
+                </time>
+               
+              </div>
+              <div className="group relative">
+                <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                  <a href={post.href}>
+                    <span className="absolute inset-0 " />
+                    {post.title}
+                  </a>
+                </h3>
+                <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>
+              </div>
+              <div className="relative mt-8 flex items-center gap-x-4">
+                <img alt="" src={post.author.imageUrl} className="h-10 w-10 rounded-full bg-gray-50" />
+                <div className="text-sm leading-6">
+                  <p className="font-semibold text-gray-900">
+                    <a href={post.author.href}>
+                      <span className="absolute inset-0" />
+                      {post.author.name}
+                    </a>
+                  </p>
+                  <p className="text-gray-600">{post.author.role}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </div>
     <Footer />
