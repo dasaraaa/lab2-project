@@ -36,13 +36,13 @@ const Header = () => {
             </Link>
           
 
-          <button
+          {/* <button
             type="button"
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none"
             onClick={() => setCartOpen(!cartOpen)}
           >
             <ShoppingCartIcon className="w-6 h-6" aria-hidden="true" />
-          </button>
+          </button> */}
           <button
             type="button"
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -121,7 +121,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Shopping Cart Slideover */}
+      {/* Shopping Cart Slideover
       {cartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="bg-white w-80 h-full shadow-lg p-4">
@@ -136,7 +136,7 @@ const Header = () => {
           </div>
           <div className="flex-grow bg-black opacity-50" onClick={() => setCartOpen(false)}></div>
         </div>
-      )}
+      )} */}
     </nav>
   );
 };
