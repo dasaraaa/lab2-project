@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const mysql = require("mysql2");
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 5000;
 require('dotenv').config();
@@ -36,10 +37,12 @@ db.connect((err) => {
 });
 
 
+db.sequelize.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`App listening on port ${port}`);
+  });
+})
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
 
 // Connect to both MongoDB and MySQL
 connectMongoDB();
