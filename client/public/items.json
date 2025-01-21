@@ -1,0 +1,113 @@
+[
+    {
+      "item_id": "A001",
+      "name": "Projector",
+      "category": "Technology",
+      "quantity": 10,
+      "condition": "Good",
+      "location": "Auditorium 1",
+      "purchase_date": "2022-01-15",
+      "description": "High-quality projector used for presentations and lectures in large auditoriums.",
+      "photo": "projector.jpg"
+    },
+    {
+      "item_id": "A002",
+      "name": "Laptop",
+      "category": "Technology",
+      "quantity": 15,
+      "condition": "Excellent",
+      "location": "Computer Lab 3",
+      "purchase_date": "2023-03-10",
+      "description": "Modern laptops equipped with the latest software for student use in computer labs.",
+      "photo": "laptop.jpg"
+    },
+    {
+      "item_id": "B001",
+      "name": "Whiteboard",
+      "category": "Furniture",
+      "quantity": 25,
+      "condition": "New",
+      "location": "Classroom 101",
+      "purchase_date": "2024-05-02",
+      "description": "Large, durable whiteboards suitable for classroom instruction and interactive teaching.",
+      "photo": "hiteboard.jpg"
+    },
+    {
+      "item_id": "B002",
+      "name": "Desk Chair",
+      "category": "Furniture",
+      "quantity": 50,
+      "condition": "Used",
+      "location": "Library",
+      "purchase_date": "2020-11-22",
+      "description": "Ergonomic chairs providing comfort and support for extended study sessions in the library.",
+      "photo": "chair.jpg"
+    },
+    {
+      "item_id": "C001",
+      "name": "Microscope",
+      "category": "Lab Equipment",
+      "quantity": 5,
+      "condition": "Excellent",
+      "location": "Biology Lab",
+      "purchase_date": "2021-08-10",
+      "description": "Advanced microscopes for biological and microscopic research in science labs.",
+      "photo": "microscope.jpg"
+    },
+    {
+      "item_id": "C002",
+      "name": "Chemistry Set",
+      "category": "Lab Equipment",
+      "quantity": 8,
+      "condition": "Good",
+      "location": "Chemistry Lab 2",
+      "purchase_date": "2022-02-05",
+      "description": "Comprehensive chemistry sets with essential tools and materials for experiments.",
+      "photo": "chemistry.jpg"
+    },
+    {
+      "item_id": "D001",
+      "name": "Bookshelf",
+      "category": "Furniture",
+      "quantity": 12,
+      "condition": "Good",
+      "location": "Library",
+      "purchase_date": "2019-07-18",
+      "description": "Sturdy bookshelves designed to hold a large collection of books and study materials.",
+      "photo": "bookshelf.jpg"
+    },
+    {
+      "item_id": "D002",
+      "name": "3D Printer",
+      "category": "Technology",
+      "quantity": 2,
+      "condition": "Excellent",
+      "location": "Innovation Lab",
+      "purchase_date": "2023-06-15",
+      "description": "State-of-the-art 3D printers for prototyping and engineering design projects.",
+      "photo": "printer.jpg"
+    },
+    {
+      "item_id": "E001",
+      "name": "Server Rack",
+      "category": "Technology",
+      "quantity": 1,
+      "condition": "Good",
+      "location": "IT Department",
+      "purchase_date": "2020-09-20",
+      "description": "Server rack housing critical networking equipment and data storage units.",
+      "photo": "server.jpg"
+    },
+ 
+    {
+      "item_id": "G001",
+      "name": "Digital Camera",
+      "category": "Photography",
+      "quantity": 4,
+      "condition": "Excellent",
+      "location": "Media Center",
+      "purchase_date": "2023-07-05",
+      "description": "High-resolution digital cameras for media production and photography classes.",
+      "photo": "camera.jpg"
+    }
+  ]

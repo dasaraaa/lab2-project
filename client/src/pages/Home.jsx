@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import foto from "../assets/images/foto.jpg"
 import News from "../components/News";
 import "../index.css"
+import PopularResources from "./PopularResources";
 
 export default function Home() {
 
@@ -48,6 +49,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <PopularResources />
       <News/>
       <Footer />
     </div>
