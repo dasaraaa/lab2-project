@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import News from './components/News';
 import AboutUs from './pages/AboutUs';
 import ContactUs from "./pages/ContactUs"
+// import ItemCard from './components/Items/ItemCard';
 function App() {
   return (
     <div style={{ fontFamily: 'Lato, sans-serif' }}>
@@ -21,7 +22,7 @@ function App() {
       <Route path='/' element={<Home/>} />
       <Route path='/about' element={<AboutUs/>} />
       <Route path='/contact' element={<ContactUs/>} />
-
+      {/* <Route path='/items/:id' element={<ItemCard/>} /> */}
       <Route path='/news' element ={<News/>} />
      </Routes>
      </BrowserRouter>
