@@ -40,7 +40,7 @@ const PopularResources = () => {
           onChange={(e) => setSelectedCategory(e.target.value)}
           name="category"
           id="category"
-          className="border bg-[#EAEAEA] bg-gray-200 px-4 py-2 rounded-md focus:outline-none"
+          className="border bg-[#EAEAEA] bg-gray-100 px-4 py-2 rounded-md focus:outline-none"
         >
           {categories.map((category, index) => (
             <option key={index} value={category}>

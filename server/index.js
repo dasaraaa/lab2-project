@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const mysql = require("mysql2");
-const cookieParser = require('cookie-parser');
-const app = express();
-const port = process.env.PORT || 5000;
-require('dotenv').config();
+const { Sequelize } = require("sequelize");
 const cors = require("cors");
 
-app.use(express.json());
+const app = express();
+const port = process.env.PORT || 5000;
+
+require("dotenv").config();
+
+app.use(express.json());  // Ensure this is added to handle JSON requests
 app.use(cors());
 
 // MongoDB connection
@@ -20,29 +21,32 @@ async function connectMongoDB() {
   }
 }
 
-// MySQL connection
-const db = mysql.createConnection({
+// MySQL connection using Sequelize
+const sequelize = new Sequelize({
   host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
+  username: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
+  database: process.env.MYSQL_DATABASE,
+  dialect: "mysql",
 });
 
-db.connect((err) => {
-  if (err) {
-    console.log("Error connecting to MySQL:", err);
-  } else {
+// Test MySQL connection
+sequelize.authenticate()
+  .then(() => {
     console.log("MySQL connected successfully!");
-  }
-});
-
-
-db.sequelize.sync().then(() => {
-  app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
+  })
+  .catch((err) => {
+    console.log("Error connecting to MySQL:", err);
   });
-})
 
+const UsersRouter = require("./Routes/Users");
+app.use("/auth", UsersRouter);
+
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
 
 // Connect to both MongoDB and MySQL
 connectMongoDB();
+
+module.exports = sequelize;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Swal from 'sweetalert2'; // Import SweetAlert2
+import axios from 'axios';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -23,31 +24,34 @@ const SignIn = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      // Simulate authentication process (without token)
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'You are now logged in.',
-      }).then(() => {
-        navigate('/'); // Redirect to dashboard after successful login
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: 'Please check your credentials.',
-      });
+      await signin();
     }
   };
 
+  const signin = async () => {
+    const data = { email: formData.email, password: formData.password };
+    try {
+      const response = await axios.post('http://localhost:5000/auth/signin', data);
+      
+      if (response.data.message === 'Logged in successfully') {
+        Swal.fire('Success', 'You are logged in!', 'success');
+        navigate('/'); // Or redirect to another page
+      } else {
+        // Handle errors
+        Swal.fire('Error', response.data.error || 'Something went wrong.', 'error');
+      }
+    } catch (error) {
+      Swal.fire('Error', error.response?.data?.error || 'Something went wrong. Please try again.', 'error');
+    }
+  };
+  
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="flex items-center">
-          {/* <img src={logo} className="h-10" alt="Lylia Beauty Logo" /> */}
           <a href="#" className="text-4xl text-gray-900 dark:text-white mb-6">
             UBT Inventory System
           </a>
