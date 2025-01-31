@@ -42,6 +42,8 @@ const UsersRouter = require("./Routes/Users");
 app.use("/auth", UsersRouter);
 const CategoryRouter= require("./Routes/Category");
 app.use("/category", CategoryRouter);
+const DistrictRouter = require("./Routes/District");
+app.use("/district", DistrictRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
