@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { Users } = require("../Models/Users");
 const bcrypt = require("bcrypt");
-
+const {sign} = require("jsonwebtoken")
+const{validateToken} = require("../Middlewares/AuthMiddleware")
 // Registration Route
 router.post("/", async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
@@ -44,21 +45,30 @@ router.post("/signin", async (req, res) => {
     if (!user) {
       return res.json({ error: "User doesn't exist!" });
     }
-
     // Compare the password with the hashed password
     const match = await bcrypt.compare(password, user.password);
-
     if (!match) {
       return res.json({ error: "Wrong email/password combination!" });
     }
 
+
+
+
+
+    const accessToken = sign({name: user.name, id:user.id}, 
+      "importantsecret" 
+    )
     // If password matches, send success response
-    return res.status(200).json({ message: "Logged in successfully" });
+    return res.status(200).json({ message: "Logged in successfully" , accessToken});
   } catch (error) {
     // Handle any unexpected errors
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
+
+
+
+  
 });
 
 module.exports = router;

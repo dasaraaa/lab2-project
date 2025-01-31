@@ -33,20 +33,27 @@ const SignIn = () => {
 
   const signin = async () => {
     const data = { email: formData.email, password: formData.password };
+  
     try {
       const response = await axios.post('http://localhost:5000/auth/signin', data);
-      
-      if (response.data.message === 'Logged in successfully') {
-        Swal.fire('Success', 'You are logged in!', 'success');
-        navigate('/'); // Or redirect to another page
-      } else {
-        // Handle errors
-        Swal.fire('Error', response.data.error || 'Something went wrong.', 'error');
+      if (response.data.error) {
+        Swal.fire('Error', response.data.error, 'error');
+        return; 
       }
+      const accessToken = response.data.accessToken; // Ensure the backend returns `accessToken`
+      if (!accessToken) {
+        Swal.fire('Error', 'Invalid response from server.', 'error');
+        return;
+      }
+      sessionStorage.setItem("accessToken", accessToken);
+      Swal.fire('Success', 'You are logged in!', 'success');
+      navigate('/'); // Redirect user after successful login
+  
     } catch (error) {
       Swal.fire('Error', error.response?.data?.error || 'Something went wrong. Please try again.', 'error');
     }
   };
+  
   
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

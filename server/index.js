@@ -2,13 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { Sequelize } = require("sequelize");
 const cors = require("cors");
-
 const app = express();
 const port = process.env.PORT || 5000;
-
 require("dotenv").config();
 
-app.use(express.json());  // Ensure this is added to handle JSON requests
+app.use(express.json()); // Instead of body-parser
 app.use(cors());
 
 // MongoDB connection
@@ -39,8 +37,11 @@ sequelize.authenticate()
     console.log("Error connecting to MySQL:", err);
   });
 
+//ROUTERS
 const UsersRouter = require("./Routes/Users");
 app.use("/auth", UsersRouter);
+const CategoryRouter= require("./Routes/Category");
+app.use("/category", CategoryRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
