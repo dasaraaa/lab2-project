@@ -11,11 +11,14 @@ import News from './components/News';
 import AboutUs from './pages/AboutUs';
 import ContactUs from "./pages/ContactUs"
 // import ItemCard from './components/Items/ItemCard';
+import Category from './components/admin/Category';
+import { ModalProvider } from 'react-hooks-use-modal';
+import Sidebar from './components/admin/Sidebar';
 function App() {
   return (
     <div style={{ fontFamily: 'Lato, sans-serif' }}>
      <BrowserRouter>
-    
+     <ModalProvider>
       <Routes>
       <Route path="signin" element={<SignIn/>} />
       <Route path="signup" element={<SignUp/>} />
@@ -24,7 +27,11 @@ function App() {
       <Route path='/contact' element={<ContactUs/>} />
       {/* <Route path='/items/:id' element={<ItemCard/>} /> */}
       <Route path='/news' element ={<News/>} />
+      <Route path='/sidebar' element= {<Sidebar />} />
+      <Route path='/category' element= {<Category />} />
+
      </Routes>
+     </ModalProvider>
      </BrowserRouter>
     </div>
   );
