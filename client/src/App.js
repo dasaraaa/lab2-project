@@ -14,6 +14,7 @@ import ContactUs from "./pages/ContactUs"
 import Category from './components/admin/Category';
 import { ModalProvider } from 'react-hooks-use-modal';
 import Sidebar from './components/admin/Sidebar';
+import District from './components/admin/District';
 function App() {
   return (
     <div style={{ fontFamily: 'Lato, sans-serif' }}>
@@ -29,6 +30,7 @@ function App() {
       <Route path='/news' element ={<News/>} />
       <Route path='/sidebar' element= {<Sidebar />} />
       <Route path='/category' element= {<Category />} />
+      <Route path='/district' element= {<District />} />
 
      </Routes>
      </ModalProvider>
