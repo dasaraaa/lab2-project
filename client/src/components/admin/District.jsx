@@ -59,7 +59,7 @@ const District = () => {
       // Add District
       axios.post("http://localhost:5000/district", districtData, {
         headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
+          accessToken:localStorage.getItem("accessToken"),
         }
       })
         .then(response => {

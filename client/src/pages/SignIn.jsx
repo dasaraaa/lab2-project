@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import axios from 'axios';
-
+import {AuthContext} from "../helpers/AuthContext"
 const SignIn = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate(); // Use useNavigate for redirection
-
+  const{setAuthState} = useContext(AuthContext)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -45,7 +45,8 @@ const SignIn = () => {
         Swal.fire('Error', 'Invalid response from server.', 'error');
         return;
       }
-      sessionStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accessToken", accessToken);
+      setAuthState({name:"", id:0, status:true});
       Swal.fire('Success', 'You are logged in!', 'success');
       navigate('/'); // Redirect user after successful login
   

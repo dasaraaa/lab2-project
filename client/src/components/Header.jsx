@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext  } from 'react';
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import logo from "../assets/images/logo.png";
+import { Button } from '@headlessui/react';
+import axios from 'axios';
 const services = [
   { id: 1, name: 'Equipment and Technology' },
   { id: 2, name: 'Furniture' },
@@ -15,8 +17,30 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [authState, setAuthState] = useState({name:"", id:0, status:false,});
+   useEffect(() => {
+      axios.get("http://localhost:5000/auth/auth", {
+        headers: {
+          accessToken : localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if(response.data.error) {
+          setAuthState({...authState, status: false});
+        } else {
+          // Correct: setting status to true when authenticated
+          setAuthState({name: response.data.name, id: response.data.id, status: true});
+        }
+        
+      })
+    } , [])  
   const navigate = useNavigate();
-
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({name:"", id:0, status:false,});
+    navigate("/")
+  }
+ 
   return (
     <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -27,14 +51,28 @@ const Header = () => {
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           
            
-         
+        {!authState.status ? (
             <Link
               to="/signup"
               className="text-white bg-blue-900 hover:bg-white hover:text-black font-medium rounded-md border border-black text-sm px-4 py-2 text-center"
             >
               Get Started
             </Link>
-          
+          ) : (
+            
+            <Button
+              onClick={logout}
+              to="/"
+              className="text-white bg-orange-600 hover:bg-white hover:text-black font-medium rounded-md border border-orange-900 text-sm px-6 py-2 text-center"
+            >
+              Logout
+             
+            </Button> 
+          )}
+         
+         <h1 className="text-lg font-semibold text-gray-700 dark:text-white   px-4 py-2 rounded-lg ">
+            {authState.name}
+          </h1>
 
           {/* <button
             type="button"
