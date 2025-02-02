@@ -50,11 +50,6 @@ router.post("/signin", async (req, res) => {
     if (!match) {
       return res.json({ error: "Wrong email/password combination!" });
     }
-
-
-
-
-
     const accessToken = sign({name: user.name, id:user.id}, 
       "importantsecret" 
     )
@@ -66,9 +61,9 @@ router.post("/signin", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 
-
-
-  
 });
+router.get("/auth", validateToken, (req,res) => {
+  res.json(req.user);
+})
 
 module.exports = router;

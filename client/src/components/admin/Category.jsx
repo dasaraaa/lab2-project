@@ -59,7 +59,7 @@ const Category = () => {
       axios.post("http://localhost:5000/category", 
       categoryData, {
         headers:{
-          accessToken:sessionStorage.getItem("accessToken"),
+          accessToken:localStorage.getItem("accessToken"),
         }
       } )
         .then(response => {
