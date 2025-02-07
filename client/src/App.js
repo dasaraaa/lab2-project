@@ -13,6 +13,7 @@ import Category from './components/admin/Category';
 import { ModalProvider } from 'react-hooks-use-modal';
 import Sidebar from './components/admin/Sidebar';
 import District from './components/admin/District';
+import Items from './components/admin/Items';
 import {AuthContext} from "./helpers/AuthContext"
 import { useState,useEffect } from 'react';
 function App() {
@@ -37,8 +38,8 @@ function App() {
       <Route path='/sidebar' element= {<Sidebar />} />
       <Route path='/category' element= {<Category />} />
       <Route path='/district' element= {<District />} />
-
-     </Routes>
+      <Route path='/items' element={<Items/>} />
+       </Routes>
      </ModalProvider>
      </BrowserRouter>
      </AuthContext.Provider>
