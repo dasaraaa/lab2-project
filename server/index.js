@@ -8,7 +8,6 @@ require("dotenv").config();
 
 app.use(express.json()); // Instead of body-parser
 app.use(cors());
-
 // MongoDB connection
 async function connectMongoDB() {
   try {
@@ -44,6 +43,8 @@ const CategoryRouter= require("./Routes/Category");
 app.use("/category", CategoryRouter);
 const DistrictRouter = require("./Routes/District");
 app.use("/district", DistrictRouter);
+const ItemsRoute = require("./Routes/Items");
+app.use("/items", ItemsRoute);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
