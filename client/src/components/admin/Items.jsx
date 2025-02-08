@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import Sidebar from './Sidebar';
 const Items = () => {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -103,15 +103,15 @@ const Items = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Items Management</h2>
-
+    <div className="flex">
+      <Sidebar />
+<div className='flex-1 p-6'>
       {/* Add Item Button */}
       <button
         onClick={() => setShowAddModal(true)}
         className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        Add New Item
+        Add new Item
       </button>
 
       {/* Table */}
@@ -328,6 +328,7 @@ const Items = () => {
 
       {/* Error Handling */}
       {error && <div className="text-red-500">{error}</div>}
+      </div>
     </div>
   );
 };

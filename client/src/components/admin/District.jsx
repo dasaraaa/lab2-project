@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsFillTrash3Fill } from "react-icons/bs";
-
+import Sidebar from "./Sidebar";
 const District = () => {
   const [districts, setDistricts] = useState([]);
   const [districtName, setDistrictName] = useState("");
@@ -98,19 +98,25 @@ const District = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex ">
+      <Sidebar/>
+      <div className="flex-1 p-6">
+
+      
       <div className="w-full sm:w-[500px] p-6 bg-white rounded-lg shadow-lg">
         <button
-          className="text-white bg-green-500 hover:bg-green-700 p-2 rounded-lg mb-4 w-full"
+          className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-lg mb-4 w-full"
           onClick={() => openModal()}
         >
-          Add District
+          Add a new District
         </button>
 
         <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+          <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
             <tr>
-              <th scope="col" className="px-6 py-3">Name</th>
+              <th scope="col" className="px-6 py-3">NAME</th>
+              <th scope="col" className="px-6 py-3">ACTIONS</th>
+
             </tr>
           </thead>
           <tbody>
@@ -157,7 +163,7 @@ const District = () => {
                 </button>
                 <button
                   onClick={handleDistrictSubmit}
-                  className="text-white bg-green-500 hover:bg-green-700 px-4 py-2 rounded-lg"
+                  className="text-white bg-blue-500 hover:bg-green-700 px-4 py-2 rounded-lg"
                 >
                   {districtId ? "Update District" : "Add District"}
                 </button>
@@ -166,6 +172,7 @@ const District = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };
