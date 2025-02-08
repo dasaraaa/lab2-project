@@ -17,7 +17,6 @@ const Items = () => {
     fetchItems();
     fetchCategories();
   }, []);
-
   const fetchItems = async () => {
     try {
       const response = await axios.get('http://localhost:5000/items');
@@ -27,7 +26,6 @@ const Items = () => {
       console.error(err);
     }
   };
-
   const fetchCategories = async () => {
     try {
       const response = await axios.get('http://localhost:5000/category');
@@ -39,7 +37,6 @@ const Items = () => {
       setLoading(false);
     }
   };
-
   const handleAddItem = async (e) => {
     e.preventDefault();
     try {
@@ -54,7 +51,6 @@ const Items = () => {
       console.error(err);
     }
   };
-
   const handleEditItem = async (e) => {
     e.preventDefault();
     try {
@@ -69,7 +65,6 @@ const Items = () => {
       console.error(err);
     }
   };
-
   const handleDeleteItem = async (id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -92,7 +87,6 @@ const Items = () => {
       }
     });
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (editItem) {
@@ -101,7 +95,6 @@ const Items = () => {
       setNewItem(prevState => ({ ...prevState, [name]: value }));
     }
   };
-
   return (
     <div className="flex">
       <Sidebar />
@@ -113,7 +106,6 @@ const Items = () => {
       >
         Add new Item
       </button>
-
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 shadow-md">
@@ -139,7 +131,6 @@ const Items = () => {
       <td className="py-3 px-6 text-left">
         {categories.find((cat) => cat.id === item.categoryId)?.name || 'Unknown'}
       </td>
-      
       <td className="py-3 px-6 text-center">
         <button
           onClick={() => {
@@ -160,10 +151,8 @@ const Items = () => {
     </tr>
   ))}
 </tbody>
-
         </table>
       </div>
-
       {/* Add Item Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -236,14 +225,12 @@ const Items = () => {
           </div>
         </div>
       )}
-
       {/* Edit Item Modal */}
       {showEditModal && editItem && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-md w-96">
             <h2 className="text-xl font-bold mb-4">Edit Item</h2>
 
-            {/* Name Input */}
             <input
               type="text"
               name="name"
@@ -252,8 +239,6 @@ const Items = () => {
               className="w-full p-2 border rounded mb-2"
               placeholder="Enter item name"
             />
-
-            {/* Description Input */}
             <textarea
               name="description"
               value={editItem.description}
@@ -261,8 +246,6 @@ const Items = () => {
               className="w-full p-2 border rounded mb-2"
               placeholder="Enter item description"
             />
-
-            {/* Quantity Input */}
             <input
               type="number"
               name="quantity"
@@ -271,8 +254,6 @@ const Items = () => {
               className="w-full p-2 border rounded mb-2"
               placeholder="Enter quantity"
             />
-
-            {/* Minimum Stock */}
             <input
               type="number"
               name="minimumStock"
@@ -281,8 +262,6 @@ const Items = () => {
               className="w-full p-2 border rounded mb-2"
               placeholder="Enter minimum stock"
             />
-
-            {/* Maximum Stock */}
             <input
               type="number"
               name="maximumStock"
@@ -291,8 +270,6 @@ const Items = () => {
               className="w-full p-2 border rounded mb-2"
               placeholder="Enter maximum stock"
             />
-
-            {/* Category Dropdown */}
             <select
               name="categoryId"
               value={editItem.categoryId}
@@ -306,7 +283,6 @@ const Items = () => {
                 </option>
               ))}
             </select>
-
             {/* Save Changes */}
             <button
               onClick={handleEditItem}
@@ -314,7 +290,6 @@ const Items = () => {
             >
               Save Changes
             </button>
-
             {/* Close Modal */}
             <button
               onClick={() => setShowEditModal(false)}
@@ -325,7 +300,6 @@ const Items = () => {
           </div>
         </div>
       )}
-
       {/* Error Handling */}
       {error && <div className="text-red-500">{error}</div>}
       </div>
