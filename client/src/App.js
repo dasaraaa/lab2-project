@@ -16,6 +16,7 @@ import District from './components/admin/District';
 import Items from './components/admin/Items';
 import {AuthContext} from "./helpers/AuthContext"
 import { useState,useEffect } from 'react';
+import InventoryItems from './pages/InventoryItems';
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -39,6 +40,8 @@ function App() {
       <Route path='/category' element= {<Category />} />
       <Route path='/district' element= {<District />} />
       <Route path='/items' element={<Items/>} />
+      <Route path='/inventory' element={<InventoryItems/>} />
+
        </Routes>
      </ModalProvider>
      </BrowserRouter>

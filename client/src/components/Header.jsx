@@ -115,10 +115,18 @@ const Header = () => {
                 About
               </Link>
             </li>
+            <li>
+              <Link
+                to="/inventory"
+                className="block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0 hover:text-black"
+              >
+                Inventory Items
+              </Link>
+            </li>
 
         
 
-            <li className="relative">
+            {/* <li className="relative">
               <button
                 type="button"
                 onClick={() => setServicesOpen(!servicesOpen)}
@@ -146,7 +154,7 @@ const Header = () => {
                   </div>
                 </div>
               )}
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/contact"
