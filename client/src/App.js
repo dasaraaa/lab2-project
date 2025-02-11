@@ -17,6 +17,7 @@ import Items from './components/admin/Items';
 import {AuthContext} from "./helpers/AuthContext"
 import { useState,useEffect } from 'react';
 import InventoryItems from './pages/InventoryItems';
+import NotFound from './pages/NotFound';
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -30,8 +31,6 @@ function App() {
         
       <Route path="signin" element={<SignIn/>} />
       <Route path="signup" element={<SignUp/>} />
-    
-      
       <Route path='/' element={<Home/>} />
       <Route path='/about' element={<AboutUs/>} />
       <Route path='/contact' element={<ContactUs/>} />
@@ -41,6 +40,7 @@ function App() {
       <Route path='/district' element= {<District />} />
       <Route path='/items' element={<Items/>} />
       <Route path='/inventory' element={<InventoryItems/>} />
+      <Route path='/notfound' element={<NotFound/>} />
 
        </Routes>
      </ModalProvider>

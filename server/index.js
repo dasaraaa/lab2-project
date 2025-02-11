@@ -5,9 +5,15 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config();
+const path = require("path")
+const multer = require('multer');
+
 
 app.use(express.json()); // Instead of body-parser
 app.use(cors());
+// Serve static files from the 'uploads' folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // MongoDB connection
 async function connectMongoDB() {
   try {

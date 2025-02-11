@@ -29,7 +29,10 @@ const Items = sequelize.define('Items', {
       allowNull: false,
       defaultValue: 100,
   },
- 
+  image: {
+    type: Sequelize.STRING,  // Store the image filename here
+    allowNull: true
+  }
 
 });
 Items.associate = function (models) {

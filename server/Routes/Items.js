@@ -3,6 +3,7 @@ const Items = require("../Models/Items")
 const router = express.Router();
 const{validateToken} = require("../Middlewares/AuthMiddleware")
 const {Category} = require("./Category")
+const multer = require('../helpers/fileUpload'); // Import the multer config
 
 
 
@@ -41,37 +42,66 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST: Create a new item
-router.post('/', async (req, res) => {
-    const { name, description, quantity, minimumStock, maximumStock, categoryId } = req.body;
-    try {
-      const newItem = await Items.create({
-        name, 
-        description, 
-        quantity, 
-        minimumStock, 
-        maximumStock, 
-        categoryId
-      });
-      res.status(201).json(newItem);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error creating item' });
-    }
-  });
-  
+// router.post('/', async (req, res) => {
+//     const { name, description, quantity, minimumStock, maximumStock, categoryId } = req.body;
+//     try {
+//       const newItem = await Items.create({
+//         name, 
+//         description, 
+//         quantity, 
+//         minimumStock, 
+//         maximumStock, 
+//         categoryId
+//       });
+//       res.status(201).json(newItem);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ message: 'Error creating item' });
+//     }
+//   });
+router.post('/', multer.single('image'), async (req, res) => {
+  const { name, description, quantity, minimumStock, maximumStock, categoryId } = req.body;
+  const image = req.file ? req.file.filename : null; // Handle image file
+
+  try {
+    const newItem = await Items.create({
+      name,
+      description,
+      quantity,
+      minimumStock,
+      maximumStock,
+      categoryId,
+      image // Save the image filename in the database
+    });
+
+    res.status(201).json(newItem); // Return the newly created item
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating item' });
+  }
+});
+
 
 // PUT: Update an existing item
-router.put('/:id', async (req, res) => {
+router.put('/:id', multer.single('image'), async (req, res) => {
   const { name, description, quantity, minimumStock, maximumStock, categoryId } = req.body;
   try {
     const item = await Items.findByPk(req.params.id);
     if (item) {
+      // Update the fields only if they exist in the request
       item.name = name || item.name;
       item.description = description || item.description;
       item.quantity = quantity || item.quantity;
       item.minimumStock = minimumStock || item.minimumStock;
       item.maximumStock = maximumStock || item.maximumStock;
       item.categoryId = categoryId || item.categoryId;
+
+      // If an image is provided, update the image field
+      if (req.file) {
+        item.image = req.file.filename; // Save the filename or path to the image
+      }
+
+      // Save the updated item
       await item.save();
       res.status(200).json(item);
     } else {
