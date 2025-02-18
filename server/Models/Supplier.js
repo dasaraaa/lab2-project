@@ -20,12 +20,12 @@ const Supplier = sequelize.define('Supplier', {
   }
 }, {
   tableName: 'suppliers',
-  timestamps: true  // This enables createdAt and updatedAt
+  timestamps: false
 });
 
-// Verifikimi i lidhjes dhe sinkronizimi i tabelës
+// // Verifikimi i lidhjes dhe sinkronizimi i tabelës
 // sequelize.sync()
-//   .then(() => console.log('Suppliers table created'))
+//   .then(() => console.log('Items table created'))
 //   .catch(err => console.log('Error creating table:', err));
 
 module.exports = Supplier;

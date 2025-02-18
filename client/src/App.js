@@ -18,6 +18,8 @@ import InventoryItems from './pages/InventoryItems';
 import NotFound from './pages/NotFound';
 import Dashboard from './components/admin/Dashboard';
 import Supplier from './components/admin/Supplier';
+import Orders from './components/admin/Orders';
+import OrdersList from './components/admin/OrdersList';
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -43,6 +45,9 @@ function App() {
       <Route path='/notfound' element={<NotFound/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/supplier' element={<Supplier/>} />
+      <Route path='/orders' element={<Orders/>} />
+      <Route path='/ordersList' element={<OrdersList/>} />
+
        </Routes>
      </ModalProvider>
      </BrowserRouter>

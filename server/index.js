@@ -54,7 +54,8 @@ const ItemsRoute = require("./Routes/Items");
 app.use("/items", ItemsRoute);
 const SupplierRoute = require("./Routes/Supplier");
 app.use("/supplier", SupplierRoute);
-
+const OrderRoute = require("./Routes/Order");
+app.use("/orders", OrderRoute);
 
 
 
