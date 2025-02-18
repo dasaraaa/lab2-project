@@ -5,19 +5,21 @@ import { BsHouse } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
 import { RiBillLine } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
-import { MdProductionQuantityLimits, MdEmojiTransportation, MdSupportAgent, MdOutlineAdminPanelSettings } from "react-icons/md";
+import { MdProductionQuantityLimits, MdEmojiTransportation,MdSupportAgent, MdOutlineAdminPanelSettings } from "react-icons/md";
+import { FaUniversity } from "react-icons/fa";
+
 import { GiShoppingBag } from "react-icons/gi";
 
 const Sidebar = () => {
   const menus = [
-    { name: "Dashboard", link: "/admin", icon: BsHouse },
+    { name: "Dashboard", link: "/dashboard", icon: BsHouse },
     // { name: "Admin", link: "/admintable", icon: MdOutlineAdminPanelSettings },
     // { name: "Users", link: "/users", icon: HiOutlineUsers },
     { name: "Items", link: "/items", icon: MdProductionQuantityLimits },
+    { name: "Orders", link: "/orders", icon: GiShoppingBag },
     { name: "Category", link: "/category", icon: RiBillLine },
-    { name: "District", link: "/district", icon: MdEmojiTransportation },
-    // { name: "Orders", link: "/orders", icon: GiShoppingBag },
-    // { name: "PostMan", link: "/postman", icon: MdEmojiTransportation },
+    { name: "District", link: "/district", icon:FaUniversity },
+    { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
     // { name: "Customer Support", link: "/agent", icon: MdSupportAgent },
     // { name: "SignOut", link: "/", icon: FaSignOutAlt, margin: true },
   ];
