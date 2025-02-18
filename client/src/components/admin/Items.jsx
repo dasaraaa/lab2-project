@@ -177,13 +177,13 @@ const Items = () => {
                   {item.image && <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover" />}
                 </td>
 
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-6 text-center mb-2">
                     <button
                       onClick={() => {
                         setEditItem(item);
                         setShowEditModal(true);
                       }}
-                      className="mr-2 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                      className="mr-2 mb-1 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
                     >
                       Edit
                     </button>

@@ -31,6 +31,7 @@ const sequelize = new Sequelize({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   dialect: "mysql",
+  
 });
 
 // Test MySQL connection
@@ -51,6 +52,11 @@ const DistrictRouter = require("./Routes/District");
 app.use("/district", DistrictRouter);
 const ItemsRoute = require("./Routes/Items");
 app.use("/items", ItemsRoute);
+const SupplierRoute = require("./Routes/Supplier");
+app.use("/supplier", SupplierRoute);
+
+
+
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
