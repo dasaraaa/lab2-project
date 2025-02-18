@@ -16,7 +16,7 @@ const Sidebar = () => {
     // { name: "Admin", link: "/admintable", icon: MdOutlineAdminPanelSettings },
     // { name: "Users", link: "/users", icon: HiOutlineUsers },
     { name: "Items", link: "/items", icon: MdProductionQuantityLimits },
-    { name: "Orders", link: "/orders", icon: GiShoppingBag },
+    { name: "Orders", link: "/ordersList", icon: GiShoppingBag },
     { name: "Category", link: "/category", icon: RiBillLine },
     { name: "District", link: "/district", icon:FaUniversity },
     { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
