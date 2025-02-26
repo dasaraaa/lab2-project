@@ -55,9 +55,8 @@ const SupplierRoute = require("./Routes/Supplier");
 app.use("/supplier", SupplierRoute);
 const OrderRoute = require("./Routes/Order");
 app.use("/orders", OrderRoute);
-
-
-
+const districtRequest = require('./Routes/DistrictRequest');
+app.use("/api/district-requests", districtRequest);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

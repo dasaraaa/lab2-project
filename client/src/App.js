@@ -20,6 +20,7 @@ import Dashboard from './components/admin/Dashboard';
 import Supplier from './components/admin/Supplier';
 import Orders from './components/admin/Orders';
 import OrdersList from './components/admin/OrdersList';
+import DistrictRequestsList from './components/admin/DistrictRequestsList';
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -47,6 +48,7 @@ function App() {
       <Route path='/supplier' element={<Supplier/>} />
       <Route path='/orders' element={<Orders/>} />
       <Route path='/ordersList' element={<OrdersList/>} />
+      <Route path='/requests' element={<DistrictRequestsList/>} />
 
        </Routes>
      </ModalProvider>
