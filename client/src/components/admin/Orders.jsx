@@ -7,6 +7,8 @@ import Sidebar from "./Sidebar";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);  // Suppliers list
+  const [items, setItems] = useState([]);          // Items list
   const [supplier, setSupplier] = useState("");
   const [item, setItem] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -16,16 +18,34 @@ const Orders = () => {
   const [orderId, setOrderId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch orders when the component loads
+  // Fetch suppliers and items when the component loads
   useEffect(() => {
+    axios.get("http://localhost:5000/supplier")  // Adjust URL based on your API
+      .then(response => {
+        setSuppliers(response.data);  // Set suppliers data
+      })
+      .catch(error => {
+        // Handle error but no longer log it to the console
+      });
+
+    axios.get("http://localhost:5000/items")  // Adjust URL based on your API
+      .then(response => {
+        setItems(response.data);  // Set items data
+      })
+      .catch(error => {
+        // Handle error but no longer log it to the console
+      });
+
+    // Fetch orders when the component loads
     axios.get("http://localhost:5000/orders")
       .then(response => {
         setOrders(response.data);
       })
       .catch(error => {
-        console.error("Error fetching orders:", error);
+        // Handle error but no longer log it to the console
       });
   }, []);
+
 
   // Open modal for Add or Edit
   const openModal = (id = null, supplier = "", item = "", quantity = "", unitPrice = "", totalPrice = "", status = "Pending") => {
@@ -177,20 +197,35 @@ const Orders = () => {
             <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
               <div className="bg-white p-6 rounded-lg shadow-xl w-full sm:w-[500px]">
                 <h3 className="text-xl font-semibold mb-4">{orderId ? "Edit Order" : "Add Order"}</h3>
-                <input
-                  type="text"
-                  className="border p-2 mb-4 w-full"
-                  placeholder="Supplier"
+                
+                {/* Supplier Dropdown */}
+                <select
                   value={supplier}
                   onChange={(e) => setSupplier(e.target.value)}
-                />
-                <input
-                  type="text"
                   className="border p-2 mb-4 w-full"
-                  placeholder="Item"
+                >
+                  <option value="">Select Supplier</option>
+                  {suppliers.map((sup) => (
+                    <option key={sup.id} value={sup.id}>
+                      {sup.name}
+                    </option>
+                  ))}
+                </select>
+
+                {/* Item Dropdown */}
+                <select
                   value={item}
                   onChange={(e) => setItem(e.target.value)}
-                />
+                  className="border p-2 mb-4 w-full"
+                >
+                  <option value="">Select Item</option>
+                  {items.map((itm) => (
+                    <option key={itm.id} value={itm.id}>
+                      {itm.name}
+                    </option>
+                  ))}
+                </select>
+
                 <input
                   type="number"
                   className="border p-2 mb-4 w-full"
@@ -220,7 +255,7 @@ const Orders = () => {
                   className="border p-2 mb-4 w-full"
                 >
                   <option value="Pending">Pending</option>
-                  <option value="Delivered">Delivered</option>
+                  <option value="Received">Received</option>
                   <option value="Stopped">Stopped</option>
                 </select>
                 <div className="flex justify-between">

@@ -72,7 +72,7 @@ const OrdersList = () => {
                     <td className="px-6 py-4">
                       <span
                         className={`inline-block px-3 py-1 font-semibold rounded-full 
-                          ${order.status === 'Delivered' ? 'bg-green-200 text-green-900' : 
+                          ${order.status === 'Received' ? 'bg-green-200 text-green-900' : 
                           order.status === 'Pending' ? 'bg-yellow-200 text-yellow-900' : 
                           'bg-red-200 text-red-900'}`}
                       >

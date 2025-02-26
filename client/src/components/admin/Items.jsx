@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Sidebar from './Sidebar';
+import "../../../src/App.css"
+import 'font-awesome/css/font-awesome.min.css';
 
 const Items = () => {
   const [items, setItems] = useState([]);
@@ -157,6 +159,7 @@ const Items = () => {
                 <th className="py-3 px-6 text-left">Quantity</th>
                 <th className="py-3 px-6 text-left">Minimum Stock</th>
                 <th className="py-3 px-6 text-left">Maximum Stock</th>
+                <th className="py-3 px-6 text-left">StockControl</th>
                 <th className="py-3 px-6 text-left">Category</th>
                 <th className="py-3 px-6 text-center">Image</th>
                 <th className="py-3 px-6 text-center">Actions</th>
@@ -165,11 +168,28 @@ const Items = () => {
             <tbody className="text-gray-600 text-sm">
               {items.map((item) => (
                 <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
+                  
                   <td className="py-3 px-6 text-left">{item.name}</td>
                   <td className="py-3 px-6 text-left">{item.description}</td>
                   <td className="py-3 px-6 text-center">{item.quantity}</td>
                   <td className="py-3 px-6 text-center">{item.minimumStock}</td>
                   <td className="py-3 px-6 text-center">{item.maximumStock}</td>
+                                    <td className="py-3 px-6 text-center">
+                    {item.notification ? (
+                      <div 
+                        className={`alert-box ${item.notification.includes('below') ? 'alert-error' : item.notification.includes('exceeds') ? 'alert-warning' : 'alert-success'}`}
+                      >
+                        <i className={`fa ${item.notification.includes('below') ? 'fa-exclamation-circle' : item.notification.includes('exceeds') ? 'fa-exclamation-triangle' : 'fa-check-circle'}`}></i>
+                        {item.notification}
+                      </div>
+                    ) : (
+                      <div className="alert-success">
+                        <i className="fa fa-check-circle"></i> Stock is in range
+                      </div>
+                    )}
+                  </td>
+
+
                   <td className="py-3 px-6 text-left">
                     {categories.find((cat) => cat.id === item.categoryId)?.name || 'Unknown'}
                   </td>

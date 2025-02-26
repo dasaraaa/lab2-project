@@ -32,8 +32,11 @@ const Items = sequelize.define('Items', {
   image: {
     type: Sequelize.STRING,  // Store the image filename here
     allowNull: true
+  },
+ notification: {  // Add this field to store notifications
+    type: DataTypes.STRING,
+    allowNull: true,
   }
-
 });
 Items.associate = function (models) {
   Items.belongsTo(Category, {
