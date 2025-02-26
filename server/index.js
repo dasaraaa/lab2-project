@@ -6,7 +6,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config();
 const path = require("path")
-const multer = require('multer');
 
 
 app.use(express.json()); // Instead of body-parser
@@ -15,14 +14,14 @@ app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB connection
-async function connectMongoDB() {
-  try {
-    await mongoose.connect(process.env.DB_URL);
-    console.log("MongoDB connected successfully!");
-  } catch (err) {
-    console.log("Error connecting to MongoDB:", err);
-  }
-}
+// async function connectMongoDB() {
+//   try {
+//     await mongoose.connect(process.env.DB_URL);
+//     console.log("MongoDB connected successfully!");
+//   } catch (err) {
+//     console.log("Error connecting to MongoDB:", err);
+//   }
+// }
 
 // MySQL connection using Sequelize
 const sequelize = new Sequelize({
@@ -59,11 +58,12 @@ app.use("/orders", OrderRoute);
 
 
 
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
 
 // Connect to both MongoDB and MySQL
-connectMongoDB();
+// connectMongoDB();
 
 module.exports = sequelize;

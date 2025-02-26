@@ -104,7 +104,7 @@ const Supplier = () => {
     <div className="flex">
   <Sidebar />
   <div className="flex-1 p-6">
-    <div className="w-full sm:w-[550px] p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-full sm:w-[600px] p-6 bg-white rounded-lg shadow-lg">
       <button
         className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-lg mb-6 w-full"
         onClick={() => openModal()}
