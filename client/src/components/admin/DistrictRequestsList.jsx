@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from './Sidebar'; // Assuming you have a Sidebar component for navigation
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Sidebar from './Sidebar';
+import Swal from 'sweetalert2';
 
 const DistrictRequestsList = () => {
   const [districtRequests, setDistrictRequests] = useState([]);
-  const [loading, setLoading] = useState(true);  // To manage the loading state
-  const [error, setError] = useState(null);  // To manage errors
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Functions for handling approve/reject actions
   const handleApprove = async (requestId, currentStatus) => {
-    // Only allow approve if the current status is 'pending'
     if (currentStatus !== 'pending') {
       Swal.fire({
         icon: 'error',
@@ -44,7 +42,6 @@ const DistrictRequestsList = () => {
   };
 
   const handleReject = async (requestId, currentStatus) => {
-    // Only allow reject if the current status is 'pending'
     if (currentStatus !== 'pending') {
       Swal.fire({
         icon: 'error',
@@ -61,9 +58,9 @@ const DistrictRequestsList = () => {
         request.id === requestId ? { ...request, status: 'rejected' } : request
       ));
       Swal.fire({
-        icon: 'error',
+        icon: 'success',
         title: 'Request Rejected',
-        text: 'The district request has been rejected.',
+        text: 'The district request has been rejected successfully.',
         showConfirmButton: true,
       });
     } catch (error) {
@@ -77,7 +74,6 @@ const DistrictRequestsList = () => {
     }
   };
 
-  // Fetch district requests from API
   useEffect(() => {
     const fetchDistrictRequests = async () => {
       try {
@@ -87,14 +83,13 @@ const DistrictRequestsList = () => {
         console.error("Error fetching district requests:", error);
         setError("Failed to fetch district requests.");
       } finally {
-        setLoading(false);  // Stop loading once data is fetched
+        setLoading(false);
       }
     };
 
     fetchDistrictRequests();
   }, []);
 
-  // Loading and error handling UI
   if (loading) {
     return (
       <div className="flex justify-center items-center p-8">
@@ -113,11 +108,8 @@ const DistrictRequestsList = () => {
 
   return (
     <div className="flex">
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Main content area */}
-      <div className="flex-1 p-8 ml-6"> {/* Adjusting margin for sidebar width */}
+      <div className="flex-1 p-8 ml-6">
         <div className="bg-white p-8 rounded-md w-full shadow-md">
           <h2 className="text-xl font-semibold mb-4">District Requests List</h2>
 
@@ -128,6 +120,7 @@ const DistrictRequestsList = () => {
                 <th className="px-6 py-3">Item</th>
                 <th className="px-6 py-3">Quantity</th>
                 <th className="px-6 py-3">Message</th>
+                <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3">Actions</th>
               </tr>
             </thead>
@@ -139,7 +132,20 @@ const DistrictRequestsList = () => {
                     <td className="px-6 py-4">{request.Item.name}</td>
                     <td className="px-6 py-4">{request.quantity}</td>
                     <td className="px-6 py-4">{request.message || 'No message'}</td>
-                    
+
+                    {/* Status Column */}
+                    <td className="px-6 py-4">
+                      {request.status === 'approved' && (
+                        <span className="text-green-600 font-bold">Approved</span>
+                      )}
+                      {request.status === 'rejected' && (
+                        <span className="text-red-600 font-bold">Rejected</span>
+                      )}
+                      {request.status === 'pending' && (
+                        <span className="text-gray-600 font-bold">Pending</span>
+                      )}
+                    </td>
+
                     <td className="px-6 py-4">
                       <button 
                         className="bg-green-500 text-white px-3 mb-2 py-1 rounded mr-2"

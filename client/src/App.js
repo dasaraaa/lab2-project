@@ -21,6 +21,8 @@ import Supplier from './components/admin/Supplier';
 import Orders from './components/admin/Orders';
 import OrdersList from './components/admin/OrdersList';
 import DistrictRequestsList from './components/admin/DistrictRequestsList';
+import AdminSignUp from './pages/admin/AdminSignUp';
+import AdminSignIn from './pages/admin/AdminSignIn';
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -49,6 +51,8 @@ function App() {
       <Route path='/orders' element={<Orders/>} />
       <Route path='/ordersList' element={<OrdersList/>} />
       <Route path='/requests' element={<DistrictRequestsList/>} />
+      <Route path='/adminLogin' element={<AdminSignIn/>} />
+      <Route path='/adminSignUp' element={<AdminSignUp/>} />
 
        </Routes>
      </ModalProvider>
