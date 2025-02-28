@@ -57,6 +57,8 @@ const OrderRoute = require("./Routes/Order");
 app.use("/orders", OrderRoute);
 const districtRequest = require('./Routes/DistrictRequest');
 app.use("/api/district-requests", districtRequest);
+const AdminRoute = require("./Routes/Admin");
+app.use("/admin", AdminRoute);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

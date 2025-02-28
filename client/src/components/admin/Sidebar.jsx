@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MdNotificationsActive } from "react-icons/md";
 import { BsHouse } from "react-icons/bs";
-import { HiOutlineUsers } from "react-icons/hi";
 import { RiBillLine } from "react-icons/ri";
-import { FaSignOutAlt } from "react-icons/fa";
-import { MdProductionQuantityLimits, MdEmojiTransportation,MdSupportAgent, MdOutlineAdminPanelSettings } from "react-icons/md";
 import { FaUniversity } from "react-icons/fa";
-
+import { MdProductionQuantityLimits, MdEmojiTransportation } from "react-icons/md";
 import { GiShoppingBag } from "react-icons/gi";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io"; // Icons for dropdown
 
 const Sidebar = () => {
+  const [isRequestsOpen, setIsRequestsOpen] = useState(false); // State to toggle dropdown
+
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: BsHouse },
-    // { name: "Admin", link: "/admintable", icon: MdOutlineAdminPanelSettings },
-    // { name: "Users", link: "/users", icon: HiOutlineUsers },
     { name: "Items", link: "/items", icon: MdProductionQuantityLimits },
-    { name: "Orders", link: "/ordersList", icon: GiShoppingBag },
-    { name: "District Requests", link: "/requests", icon: FaUniversity },
-    { name: "District", link: "/district", icon:FaUniversity },
+    { name: "District", link: "/district", icon: FaUniversity },
     { name: "Category", link: "/category", icon: RiBillLine },
     { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
-    // { name: "Customer Support", link: "/agent", icon: MdSupportAgent },
-    // { name: "SignOut", link: "/", icon: FaSignOutAlt, margin: true },
+  ];
+
+  const requestSubmenus = [
+    { name: "Orders List", link: "/ordersList" },
+    { name: "District Requests", link: "/requests" },
   ];
 
   return (
@@ -34,6 +33,40 @@ const Sidebar = () => {
         <h2 className="font-bold text-white origin-left text-xl">Hi User</h2>
         <div className="mt-8 gap-6 flex flex-col relative">
           <h1>User Menu</h1>
+           {/* Dropdown Menu for Requests */}
+           <div>
+            <div
+              className="flex items-center justify-between text-sm font-medium p-2 rounded-md cursor-pointer hover:bg-gray-700"
+              onClick={() => setIsRequestsOpen(!isRequestsOpen)}
+            >
+              <div className="flex items-center gap-3.5">
+                <GiShoppingBag size={20} color="white" />
+                <h2>Requests</h2>
+              </div>
+              {isRequestsOpen ? (
+                <IoIosArrowDown size={16} />
+              ) : (
+                <IoIosArrowForward size={16} />
+              )}
+            </div>
+            {isRequestsOpen && (
+              <div className="ml-6 mt-2">
+                {requestSubmenus.map((submenu, index) => (
+                  <NavLink
+                    key={index}
+                    to={submenu.link}
+                    className={({ isActive }) =>
+                      `block text-sm py-1 px-2 rounded-md ${
+                        isActive ? "bg-gray-800" : "hover:bg-gray-700"
+                      }`
+                    }
+                  >
+                    {submenu.name}
+                  </NavLink>
+                ))}
+              </div>
+            )}
+          </div>
           {menus.map((menu, i) => (
             <NavLink
               key={i}
@@ -48,6 +81,8 @@ const Sidebar = () => {
               <h2>{menu.name}</h2>
             </NavLink>
           ))}
+
+         
         </div>
       </div>
     </div>

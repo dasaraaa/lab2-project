@@ -38,7 +38,7 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({name:"", id:0, status:false,});
-    navigate("/")
+    navigate("/signin")
   }
  
   return (

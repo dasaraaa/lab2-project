@@ -5,8 +5,8 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
   });
   
 
-const Users = sequelize.define('Users', {
-    name: {
+const Admin = sequelize.define('Admin', {
+    username: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -18,17 +18,7 @@ const Users = sequelize.define('Users', {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    phoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    role: {  // Shtojmë fushën për rolin e përdoruesit
-        type: DataTypes.ENUM('admin', 'manager', 'staff'), // Mund të ndryshosh sipas nevojës
-        allowNull: false,
-        defaultValue: 'staff',  // Përdoruesit e rinj marrin automatikisht rolin 'staff'
     }
-
 
 });
 
@@ -42,4 +32,4 @@ const Users = sequelize.define('Users', {
 // });
 
 
-module.exports = { sequelize, Users };
+module.exports = { sequelize, Admin };

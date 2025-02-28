@@ -1,24 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const { Users } = require("../Models/Users");
+const { Admin } = require("../Models/Admin");
 const bcrypt = require("bcrypt");
-const {sign} = require("jsonwebtoken")
-const{validateToken} = require("../Middlewares/AuthMiddleware")
+
 // Registration Route
 router.post("/", async (req, res) => {
-  const { name, email, password, phoneNumber } = req.body;
+  const { username, email, password } = req.body;
   
   try {
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user in the database
-    await Users.create({
-      name: name,
-      email: email,
-      password: hashedPassword,
-      phoneNumber: phoneNumber
-    });
+    await Admin.create({
+        username: username,
+        email: email.toLowerCase(),
+        password: hashedPassword,
+      });
+      
 
     // Send success response after the user is created
     res.json("Successfully added!");
@@ -34,37 +33,33 @@ router.post("/signin", async (req, res) => {
 
   // Check if email is provided
   if (!email) {
-    return res.json({ error: "User doesn't exist!" });
+    return res.status(400).json({ error: "Email is required!" });
   }
 
   try {
     // Find the user by email
-    const user = await Users.findOne({ where: { email: email } });
-
+    console.log("Looking for admin with email:", email);
+    const admin = await Admin.findOne({ where: { email: email } });
+    console.log("Admin found:", admin);
+    
     // Check if user was found
-    if (!user) {
-      return res.json({ error: "User doesn't exist!" });
+    if (!admin) {
+      return res.status(404).json({ error: "Admin doesn't exist!" });
     }
+    
     // Compare the password with the hashed password
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, admin.password);
     if (!match) {
-      return res.json({ error: "Wrong email/password combination!" });
+      return res.status(401).json({ error: "Wrong email/password combination!" });
     }
-    const accessToken = sign({name: user.name, id:user.id}, 
-      "importantsecret",
-      { expiresIn: "1h" }
-    )
+
     // If password matches, send success response
-    return res.status(200).json({ message: "Logged in successfully" , accessToken});
+    return res.status(200).json({ message: "Logged in successfully" });
   } catch (error) {
     // Handle any unexpected errors
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
-
 });
-router.get("/auth", validateToken, (req,res) => {
-  res.json(req.user);
-})
 
 module.exports = router;
