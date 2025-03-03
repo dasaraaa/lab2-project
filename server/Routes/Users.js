@@ -6,7 +6,7 @@ const {sign} = require("jsonwebtoken")
 const{validateToken} = require("../Middlewares/AuthMiddleware")
 // Registration Route
 router.post("/", async (req, res) => {
-  const { name, email, password, phoneNumber } = req.body;
+  const { name, email, password, phoneNumber,role } = req.body;
   
   try {
     // Hash the password before storing it
@@ -17,7 +17,8 @@ router.post("/", async (req, res) => {
       name: name,
       email: email,
       password: hashedPassword,
-      phoneNumber: phoneNumber
+      phoneNumber: phoneNumber,
+      role: role || 'staff'
     });
 
     // Send success response after the user is created
@@ -50,7 +51,7 @@ router.post("/signin", async (req, res) => {
     if (!match) {
       return res.json({ error: "Wrong email/password combination!" });
     }
-    const accessToken = sign({name: user.name, id:user.id}, 
+    const accessToken = sign({name: user.name, id:user.id, role: user.role}, 
       "importantsecret",
       { expiresIn: "1h" }
     )

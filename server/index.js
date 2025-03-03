@@ -59,7 +59,8 @@ const districtRequest = require('./Routes/DistrictRequest');
 app.use("/api/district-requests", districtRequest);
 const AdminRoute = require("./Routes/Admin");
 app.use("/admin", AdminRoute);
-
+const DistrictStock = require("./Routes/DistrictStock")
+app.use("/districtStock", DistrictStock)
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
