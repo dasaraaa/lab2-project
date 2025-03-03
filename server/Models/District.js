@@ -11,4 +11,18 @@ const District = sequelize.define('District', {
         allowNull: false,
     },
 });
+
+District.associate = function (models) {
+  District.belongsToMany(models.Items, {
+    through: models.DistrictStock,
+    foreignKey: 'district_id',
+    as: 'items',  // Alias for items in a district
+  });
+};
+
+
+  sequelize.sync()
+  .then(() => console.log('Items table created'))
+  .catch(err => console.log('Error creating table:', err));
+  
 module.exports = District;   

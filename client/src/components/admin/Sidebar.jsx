@@ -22,6 +22,7 @@ const Sidebar = () => {
   const requestSubmenus = [
     { name: "Orders List", link: "/ordersList" },
     { name: "District Requests", link: "/requests" },
+    {name:"DistrictStockManagement", link:"/district-stock"}
   ];
 
   return (

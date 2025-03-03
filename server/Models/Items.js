@@ -43,9 +43,17 @@ Items.associate = function (models) {
     foreignKey: 'categoryId',
     as: 'categories'  // Alias for the relationship
   });
+
+   // Association for many-to-many relationship with District
+  Items.belongsToMany(models.District, {
+    through: models.DistrictStock,
+    foreignKey: 'item_id',
+    as: 'districts',
+  });
+  
 };
-// sequelize.sync()
-//   .then(() => console.log('Items table created'))
-//   .catch(err => console.log('Error creating table:', err));
+sequelize.sync()
+  .then(() => console.log('Items table created'))
+  .catch(err => console.log('Error creating table:', err));
   
 module.exports = Items;   
