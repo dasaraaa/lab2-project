@@ -7,24 +7,24 @@ import { FaUniversity } from "react-icons/fa";
 import { MdProductionQuantityLimits, MdEmojiTransportation } from "react-icons/md";
 import { GiShoppingBag } from "react-icons/gi";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import "../../App.css"
+import "../../App.css";
+
 const Sidebar = () => {
   const [isRequestsOpen, setIsRequestsOpen] = useState(false);
 
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: BsHouse },
+    { name: "Category", link: "/category", icon: RiBillLine },
     { name: "Items", link: "/items", icon: MdProductionQuantityLimits },
     { name: "District", link: "/district", icon: FaUniversity },
-    { name: "Category", link: "/category", icon: RiBillLine },
     { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
-    
+    { name: "District Stock Management", link: "/district-stock", icon: GiShoppingBag }, // Moved here
 
   ];
 
   const requestSubmenus = [
     { name: "Orders List", link: "/ordersList" },
     { name: "District Requests", link: "/requests" },
-    { name: "District Stock Management", link: "/district-stock" }
   ];
 
   return (
@@ -33,7 +33,23 @@ const Sidebar = () => {
         <h2 className="font-bold text-white origin-left text-xl">Hi User</h2>
         <div className="mt-8 gap-6 flex flex-col relative">
           <h1>User Menu</h1>
-          
+
+          {/* Main Menus (Moved Before Requests) */}
+          {menus.map((menu, i) => (
+            <NavLink
+              key={i}
+              to={menu.link}
+              className={({ isActive }) =>
+                `flex items-center text-sm gap-3.5 font-medium p-2 rounded-md cursor-pointer ${
+                  isActive ? "bg-gray-800" : "hover:bg-gray-700"
+                }`
+              }
+            >
+              {React.createElement(menu.icon, { size: "20", color: "white" })}
+              <h2>{menu.name}</h2>
+            </NavLink>
+          ))}
+
           {/* Dropdown Menu for Requests */}
           <div>
             <div
@@ -41,7 +57,6 @@ const Sidebar = () => {
               onClick={() => setIsRequestsOpen(!isRequestsOpen)}
             >
               <div className="flex items-center gap-3.5">
-                <GiShoppingBag size={20} color="white" />
                 <h2>Requests</h2>
               </div>
               {isRequestsOpen ? (
@@ -68,22 +83,6 @@ const Sidebar = () => {
               </div>
             )}
           </div>
-
-          {/* Main Menus */}
-          {menus.map((menu, i) => (
-            <NavLink
-              key={i}
-              to={menu.link}
-              className={({ isActive }) =>
-                `flex items-center text-sm gap-3.5 font-medium p-2 rounded-md cursor-pointer ${
-                  isActive ? "bg-gray-800" : "hover:bg-gray-700"
-                }`
-              }
-            >
-              {React.createElement(menu.icon, { size: "20", color: "white" })}
-              <h2>{menu.name}</h2>
-            </NavLink>
-          ))}
         </div>
       </div>
     </div>
