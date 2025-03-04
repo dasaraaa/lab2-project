@@ -16,7 +16,6 @@ import {AuthContext} from "./helpers/AuthContext"
 import { useState} from 'react';
 import InventoryItems from './pages/InventoryItems';
 import NotFound from './pages/NotFound';
-import Dashboard from './components/admin/Dashboard';
 import Supplier from './components/admin/Supplier';
 import Orders from './components/admin/Orders';
 import OrdersList from './components/admin/OrdersList';
@@ -24,6 +23,7 @@ import DistrictRequestsList from './components/admin/DistrictRequestsList';
 import AdminSignUp from './pages/admin/AdminSignUp';
 import AdminSignIn from './pages/admin/AdminSignIn';
 import DistrictStock from './components/admin/DistrictStock';
+import Dashboard from './pages/admin/Dashboard';
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -55,6 +55,7 @@ function App() {
       <Route path='/adminLogin' element={<AdminSignIn/>} />
       <Route path='/adminSignUp' element={<AdminSignUp/>} />
       <Route path='/district-stock' element={<DistrictStock/>} />
+      <Route path='/dashboard' element={<Dashboard/>} />
 
        </Routes>
      </ModalProvider>

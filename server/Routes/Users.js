@@ -67,5 +67,15 @@ router.post("/signin", async (req, res) => {
 router.get("/auth", validateToken, (req,res) => {
   res.json(req.user);
 })
+router.get("/count", async (req, res) => {
+  try {
+    const userCount = await Users.count(); // Sequelize count method
+    res.json({ count: userCount });
+  } catch (error) {
+    console.error("Error fetching user count:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 module.exports = router;

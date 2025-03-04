@@ -14,14 +14,14 @@ app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB connection
-// async function connectMongoDB() {
-//   try {
-//     await mongoose.connect(process.env.DB_URL);
-//     console.log("MongoDB connected successfully!");
-//   } catch (err) {
-//     console.log("Error connecting to MongoDB:", err);
-//   }
-// }
+async function connectMongoDB() {
+  try {
+    await mongoose.connect(process.env.DB_URL);
+    console.log("MongoDB connected successfully!");
+  } catch (err) {
+    console.log("Error connecting to MongoDB:", err);
+  }
+}
 
 // MySQL connection using Sequelize
 const sequelize = new Sequelize({
@@ -66,6 +66,6 @@ app.listen(port, () => {
 });
 
 // Connect to both MongoDB and MySQL
-// connectMongoDB();
+connectMongoDB();
 
 module.exports = sequelize;

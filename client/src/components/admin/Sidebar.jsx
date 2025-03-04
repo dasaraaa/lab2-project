@@ -6,10 +6,10 @@ import { RiBillLine } from "react-icons/ri";
 import { FaUniversity } from "react-icons/fa";
 import { MdProductionQuantityLimits, MdEmojiTransportation } from "react-icons/md";
 import { GiShoppingBag } from "react-icons/gi";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io"; // Icons for dropdown
-
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import "../../App.css"
 const Sidebar = () => {
-  const [isRequestsOpen, setIsRequestsOpen] = useState(false); // State to toggle dropdown
+  const [isRequestsOpen, setIsRequestsOpen] = useState(false);
 
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: BsHouse },
@@ -17,25 +17,25 @@ const Sidebar = () => {
     { name: "District", link: "/district", icon: FaUniversity },
     { name: "Category", link: "/category", icon: RiBillLine },
     { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
+    
+
   ];
 
   const requestSubmenus = [
     { name: "Orders List", link: "/ordersList" },
     { name: "District Requests", link: "/requests" },
-    {name:"DistrictStockManagement", link:"/district-stock"}
+    { name: "District Stock Management", link: "/district-stock" }
   ];
 
   return (
     <div className="flex gap-6">
-      <span className="absolute bg-transparent border-2 cursor-pointer flex items-center justify-center w-12 h-12 top-6 right-6 rounded-full">
-        <MdNotificationsActive fill="grey" size={30} />
-      </span>
       <div className="bg-blue-900 p-6 min-h-screen w-72 text-gray-100 px-4">
         <h2 className="font-bold text-white origin-left text-xl">Hi User</h2>
         <div className="mt-8 gap-6 flex flex-col relative">
           <h1>User Menu</h1>
-           {/* Dropdown Menu for Requests */}
-           <div>
+          
+          {/* Dropdown Menu for Requests */}
+          <div>
             <div
               className="flex items-center justify-between text-sm font-medium p-2 rounded-md cursor-pointer hover:bg-gray-700"
               onClick={() => setIsRequestsOpen(!isRequestsOpen)}
@@ -68,6 +68,8 @@ const Sidebar = () => {
               </div>
             )}
           </div>
+
+          {/* Main Menus */}
           {menus.map((menu, i) => (
             <NavLink
               key={i}
@@ -82,8 +84,6 @@ const Sidebar = () => {
               <h2>{menu.name}</h2>
             </NavLink>
           ))}
-
-         
         </div>
       </div>
     </div>
