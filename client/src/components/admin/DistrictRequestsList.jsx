@@ -7,6 +7,7 @@ const DistrictRequestsList = () => {
   const [districtRequests, setDistrictRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   const handleApprove = async (requestId, currentStatus) => {
     if (currentStatus !== 'pending') {
@@ -90,6 +91,17 @@ const DistrictRequestsList = () => {
     fetchDistrictRequests();
   }, []);
 
+  // Sorting Functionality
+  const sortDistrictRequests = () => {
+    const sortedRequests = [...districtRequests].sort((a, b) => {
+      return sortOrder === "asc"
+        ? a.District.name.localeCompare(b.District.name) // Sort A-Z
+        : b.District.name.localeCompare(a.District.name); // Sort Z-A
+    });
+    setDistrictRequests(sortedRequests);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Toggle sort order
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center p-8">
@@ -112,6 +124,16 @@ const DistrictRequestsList = () => {
       <div className="flex-1 p-8 ml-6">
         <div className="bg-white p-8 rounded-md w-full shadow-md">
           <h2 className="text-xl font-semibold mb-4">District Requests List</h2>
+
+          {/* Sorting Button above the table */}
+          <div className="flex justify-between mb-4">
+            <button
+              className="text-white bg-green-600 hover:bg-green-700 p-2 rounded-lg"
+              onClick={sortDistrictRequests}
+            >
+              {sortOrder === "asc" ? "Sort A-Z" : "Sort Z-A"}
+            </button>
+          </div>
 
           <table className="w-full text-sm text-left text-gray-500">
             <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">

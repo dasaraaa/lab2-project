@@ -14,6 +14,7 @@ const Items = () => {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // State for the search query
 
   // Fetch items and categories on component mount
   useEffect(() => {
@@ -68,7 +69,6 @@ const Items = () => {
       console.error(err);
     }
   };
-  
 
   const handleEditItem = async (e) => {
     e.preventDefault();
@@ -138,17 +138,63 @@ const Items = () => {
     }
   };
 
+  // Sorting function
+  const sortItemsAZ = () => {
+    const sortedItems = [...items].sort((a, b) => a.name.localeCompare(b.name));
+    setItems(sortedItems);
+  };
+
+  const sortItemsZA = () => {
+    const sortedItems = [...items].sort((a, b) => b.name.localeCompare(a.name));
+    setItems(sortedItems);
+  };
+
+  // Filtering items based on search query
+  const filteredItems = items.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
   return (
     <div className="flex">
       <Sidebar />
       <div className='flex-1 p-6'>
-        {/* Add Item Button */}
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Add new Item
-        </button>
+        <h2 className="text-xl font-semibold mb-4">Items List</h2>
+
+        {/* Search Bar */}
+        <div className="flex items-center space-x-3 mb-4">
+          <input
+            type="text"
+            placeholder="Search items..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="p-2 w-1/3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Add Item Button and Sorting Buttons */}
+        <div className="flex justify-between mb-4">
+          <div>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Add new Item
+            </button>
+          </div>
+          <div className="flex space-x-2">
+            <button
+              onClick={sortItemsAZ}
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            >
+              Sort A-Z
+            </button>
+            <button
+              onClick={sortItemsZA}
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Sort Z-A
+            </button>
+          </div>
+        </div>
+
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 shadow-md">
@@ -166,15 +212,14 @@ const Items = () => {
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm">
-              {items.map((item) => (
+              {filteredItems.map((item) => (
                 <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  
                   <td className="py-3 px-6 text-left">{item.name}</td>
                   <td className="py-3 px-6 text-left">{item.description}</td>
                   <td className="py-3 px-6 text-center">{item.quantity}</td>
                   <td className="py-3 px-6 text-center">{item.minimumStock}</td>
                   <td className="py-3 px-6 text-center">{item.maximumStock}</td>
-                                    <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-6 text-center">
                     {item.notification ? (
                       <div 
                         className={`alert-box ${item.notification.includes('below') ? 'alert-error' : item.notification.includes('exceeds') ? 'alert-warning' : 'alert-success'}`}
@@ -189,13 +234,12 @@ const Items = () => {
                     )}
                   </td>
 
-
                   <td className="py-3 px-6 text-left">
                     {categories.find((cat) => cat.id === item.categoryId)?.name || 'Unknown'}
                   </td>
                   <td className="py-3 px-6 text-center">
-                  {item.image && <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover" />}
-                </td>
+                    {item.image && <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover" />}
+                  </td>
 
                   <td className="py-3 px-6 text-center mb-2">
                     <button
@@ -285,16 +329,16 @@ const Items = () => {
               />
               <div className="flex justify-end">
                 <button
-                  onClick={handleAddItem}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  Add Item
-                </button>
-                <button
                   onClick={() => setShowAddModal(false)}
-                  className="ml-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+                  className="mr-2 px-4 py-2 bg-gray-400 text-white rounded"
                 >
                   Cancel
+                </button>
+                <button
+                  onClick={handleAddItem}
+                  className="px-4 py-2 bg-blue-600 text-white rounded"
+                >
+                  Add Item
                 </button>
               </div>
             </div>
@@ -302,7 +346,7 @@ const Items = () => {
         )}
 
         {/* Edit Item Modal */}
-        {showEditModal && (
+        {showEditModal && editItem && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded shadow-md w-96">
               <h2 className="text-xl font-bold mb-4">Edit Item</h2>
@@ -366,16 +410,16 @@ const Items = () => {
               />
               <div className="flex justify-end">
                 <button
-                  onClick={handleEditItem}
-                  className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
-                >
-                  Save Changes
-                </button>
-                <button
                   onClick={() => setShowEditModal(false)}
-                  className="ml-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+                  className="mr-2 px-4 py-2 bg-gray-400 text-white rounded"
                 >
                   Cancel
+                </button>
+                <button
+                  onClick={handleEditItem}
+                  className="px-4 py-2 bg-yellow-600 text-white rounded"
+                >
+                  Update Item
                 </button>
               </div>
             </div>

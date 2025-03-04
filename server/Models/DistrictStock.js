@@ -39,8 +39,8 @@ const DistrictStock = sequelize.define("DistrictStock", {
 });
 
 // Synchronize the DistrictStock table
-sequelize.sync()
-  .then(() => console.log('DistrictStock table created'))
-  .catch(err => console.log('Error creating table:', err));
+// sequelize.sync()
+//   .then(() => console.log('DistrictStock table created'))
+//   .catch(err => console.log('Error creating table:', err));
 
 module.exports = DistrictStock;

@@ -52,8 +52,8 @@ Items.associate = function (models) {
   });
   
 };
-sequelize.sync()
-  .then(() => console.log('Items table created'))
-  .catch(err => console.log('Error creating table:', err));
+// sequelize.sync()
+//   .then(() => console.log('Items table created'))
+//   .catch(err => console.log('Error creating table:', err));
   
 module.exports = Items;   
