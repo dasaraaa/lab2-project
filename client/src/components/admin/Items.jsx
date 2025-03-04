@@ -215,7 +215,16 @@ const Items = () => {
               {filteredItems.map((item) => (
                 <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
                   <td className="py-3 px-6 text-left">{item.name}</td>
-                  <td className="py-3 px-6 text-left">{item.description}</td>
+                  <td className="py-3 px-6 text-left">
+                    {item.description.length > 50 ? `${item.description.slice(0, 50)}...` : item.description}
+                    {/* Optional: Add a "Read More" link */}
+                    {item.description.length > 50 && (
+                      <span className="text-blue-600 cursor-pointer" onClick={() => alert(item.description)}>
+                        Read More
+                      </span>
+                    )}
+                  </td>
+
                   <td className="py-3 px-6 text-center">{item.quantity}</td>
                   <td className="py-3 px-6 text-center">{item.minimumStock}</td>
                   <td className="py-3 px-6 text-center">{item.maximumStock}</td>
