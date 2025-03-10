@@ -197,81 +197,98 @@ const Items = () => {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 shadow-md">
-            <thead>
-              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Item Name</th>
-                <th className="py-3 px-6 text-left">Description</th>
-                <th className="py-3 px-6 text-left">Quantity</th>
-                <th className="py-3 px-6 text-left">Minimum Stock</th>
-                <th className="py-3 px-6 text-left">Maximum Stock</th>
-                <th className="py-3 px-6 text-left">StockControl</th>
-                <th className="py-3 px-6 text-left">Category</th>
-                <th className="py-3 px-6 text-center">Image</th>
-                <th className="py-3 px-6 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 text-sm">
-              {filteredItems.map((item) => (
-                <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left">{item.name}</td>
-                  <td className="py-3 px-6 text-left">
-                    {item.description.length > 50 ? `${item.description.slice(0, 50)}...` : item.description}
-                    {/* Optional: Add a "Read More" link */}
-                    {item.description.length > 50 && (
-                      <span className="text-blue-600 cursor-pointer" onClick={() => alert(item.description)}>
-                        Read More
-                      </span>
-                    )}
-                  </td>
+  <table className="min-w-full bg-white border border-gray-200 shadow-md">
+    <thead>
+      <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th className="py-3 px-6 text-left">Item Name</th>
+        <th className="py-3 px-6 text-left">Description</th>
+        <th className="py-3 px-6 text-left">Quantity</th>
+        <th className="py-3 px-6 text-left">Minimum Stock</th>
+        <th className="py-3 px-6 text-left">Maximum Stock</th>
+        <th className="py-3 px-6 text-left">StockControl</th>
+        <th className="py-3 px-6 text-left">Category</th>
+        <th className="py-3 px-6 text-center">Image</th>
+        <th className="py-3 px-6 text-center">Actions</th>
+      </tr>
+    </thead>
+  </table>
 
-                  <td className="py-3 px-6 text-center">{item.quantity}</td>
-                  <td className="py-3 px-6 text-center">{item.minimumStock}</td>
-                  <td className="py-3 px-6 text-center">{item.maximumStock}</td>
-                  <td className="py-3 px-6 text-center">
-                    {item.notification ? (
-                      <div 
-                        className={`alert-box ${item.notification.includes('below') ? 'alert-error' : item.notification.includes('exceeds') ? 'alert-warning' : 'alert-success'}`}
-                      >
-                        <i className={`fa ${item.notification.includes('below') ? 'fa-exclamation-circle' : item.notification.includes('exceeds') ? 'fa-exclamation-triangle' : 'fa-check-circle'}`}></i>
-                        {item.notification}
-                      </div>
-                    ) : (
-                      <div className="alert-success">
-                        <i className="fa fa-check-circle"></i> Stock is in range
-                      </div>
-                    )}
-                  </td>
+  {/* Scrollable table body */}
+  <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+    <table className="min-w-full bg-white border border-gray-200 shadow-md">
+      <tbody className="text-gray-600 text-sm">
+        {filteredItems.map((item) => (
+          <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
+            <td className="py-3 px-6 text-left">{item.name}</td>
+            <td className="py-3 px-6 text-left">
+              {item.description.length > 50 ? `${item.description.slice(0, 50)}...` : item.description}
+              {item.description.length > 50 && (
+                <span className="text-blue-600 cursor-pointer" onClick={() => alert(item.description)}>
+                  Read More
+                </span>
+              )}
+            </td>
+            <td className="py-3 px-6 text-center">{item.quantity}</td>
+            <td className="py-3 px-6 text-center">{item.minimumStock}</td>
+            <td className="py-3 px-6 text-center">{item.maximumStock}</td>
+            <td className="py-3 px-6 text-center">
+              {item.notification ? (
+                <div
+                  className={`alert-box ${
+                    item.notification.includes('below')
+                      ? 'alert-error'
+                      : item.notification.includes('exceeds')
+                      ? 'alert-warning'
+                      : 'alert-success'
+                  }`}
+                >
+                  <i
+                    className={`fa ${
+                      item.notification.includes('below')
+                        ? 'fa-exclamation-circle'
+                        : item.notification.includes('exceeds')
+                        ? 'fa-exclamation-triangle'
+                        : 'fa-check-circle'
+                    }`}
+                  ></i>
+                  {item.notification}
+                </div>
+              ) : (
+                <div className="alert-success">
+                  <i className="fa fa-check-circle"></i> Stock is in range
+                </div>
+              )}
+            </td>
+            <td className="py-3 px-6 text-left">
+              {categories.find((cat) => cat.id === item.categoryId)?.name || 'Unknown'}
+            </td>
+            <td className="py-3 px-6 text-center">
+              {item.image && <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover" />}
+            </td>
+            <td className="py-3 px-6 text-center mb-2">
+              <button
+                onClick={() => {
+                  setEditItem(item);
+                  setShowEditModal(true);
+                }}
+                className="mr-2 mb-1 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteItem(item.id)}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
 
-                  <td className="py-3 px-6 text-left">
-                    {categories.find((cat) => cat.id === item.categoryId)?.name || 'Unknown'}
-                  </td>
-                  <td className="py-3 px-6 text-center">
-                    {item.image && <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.name} className="w-12 h-12 object-cover" />}
-                  </td>
-
-                  <td className="py-3 px-6 text-center mb-2">
-                    <button
-                      onClick={() => {
-                        setEditItem(item);
-                        setShowEditModal(true);
-                      }}
-                      className="mr-2 mb-1 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteItem(item.id)}
-                      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
 
         {/* Add Item Modal */}
         {showAddModal && (

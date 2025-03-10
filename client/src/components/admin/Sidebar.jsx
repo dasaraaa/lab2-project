@@ -18,7 +18,8 @@ const Sidebar = () => {
     { name: "Items", link: "/items", icon: MdProductionQuantityLimits },
     { name: "District", link: "/district", icon: FaUniversity },
     { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
-    { name: "District Stock Management", link: "/district-stock", icon: GiShoppingBag }, // Moved here
+    { name: "District Stock Management", link: "/district-stock", icon: GiShoppingBag }, 
+    { name: "Orders", link: "/orders", icon: GiShoppingBag  },
 
   ];
 

@@ -7,10 +7,11 @@ import Sidebar from "./Sidebar";
 
 const DistrictStock = () => {
   const [stocks, setStocks] = useState([]);
-  const [districts, setDistricts] = useState([]);  // State for districts
-  const [items, setItems] = useState([]);          // State for items
+  const [districts, setDistricts] = useState([]);
+  const [items, setItems] = useState([]);
   const [districtId, setDistrictId] = useState("");
   const [itemId, setItemId] = useState("");
+  const [itemName, setItemName] = useState("");  // New state to store the selected item name
   const [quantity, setQuantity] = useState("");
   const [selectedStock, setSelectedStock] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,18 +21,10 @@ const DistrictStock = () => {
     quantity: "",
   });
 
-  // Close modal function
+  // Define closeModal function
   const closeModal = () => {
-    setDistrictId("");
-    setItemId("");
-    setQuantity("");
-    setSelectedStock(null);
     setIsModalOpen(false);
   };
-
-  // Convert districts and items to maps for faster lookup
-  const districtMap = new Map(districts.map(district => [district.id, district.name]));
-  const itemMap = new Map(items.map(item => [item.id, item.name]));
 
   // Fetch all district stocks when the component loads
   useEffect(() => {
@@ -39,10 +32,10 @@ const DistrictStock = () => {
       try {
         const stockResponse = await axios.get("http://localhost:5000/districtStock");
         setStocks(stockResponse.data);
-        
+
         const districtResponse = await axios.get("http://localhost:5000/district");
         setDistricts(districtResponse.data);
-        
+
         const itemResponse = await axios.get("http://localhost:5000/items");
         setItems(itemResponse.data);
       } catch (error) {
@@ -64,6 +57,22 @@ const DistrictStock = () => {
     setItemId(item_id);
     setQuantity(quantity);
     setIsModalOpen(true);
+  };
+
+  const handleFilterChange = (e) => {
+    setItemName(e.target.value);  // Update selected item name to trigger re-render
+    setItemId(items.find(item => item.name === e.target.value)?.id || "");  // Find itemId by name
+  };
+
+  // Filter stocks based on the selected item name
+  const filteredStocks = itemName
+    ? stocks.filter((stock) => items.find(item => item.id === stock.item_id)?.name === itemName)  // Filter by item name
+    : stocks; // If no item is selected, show all stocks
+
+  // Reset the filter
+  const resetFilter = () => {
+    setItemName("");  // Clear selected item name
+    setItemId("");  // Clear item ID
   };
 
   // Validate form fields
@@ -145,6 +154,30 @@ const DistrictStock = () => {
             Add a new District Stock
           </button>
 
+          {/* Dropdown to filter by item */}
+          <div className="flex space-x-2 mb-4">
+            <select
+              value={itemName}
+              onChange={handleFilterChange}
+              className="border border-gray-300 rounded-lg p-2 w-full"
+            >
+              <option value="">Select Item</option>
+              {items.map((item) => (
+                <option key={item.id} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+
+            {/* Reset Filter Button */}
+            <button
+              onClick={resetFilter}
+              className="text-white bg-gray-500 hover:bg-gray-700 p-2 rounded-md"
+            >
+              Reset Filter
+            </button>
+          </div>
+
           <table className="w-full text-sm text-left text-gray-500">
             <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <tr>
@@ -155,27 +188,33 @@ const DistrictStock = () => {
               </tr>
             </thead>
             <tbody>
-              {stocks.map((stock) => (
-                <tr key={`${stock.district_id}-${stock.item_id}`} className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4">{districtMap.get(stock.district_id) || 'Unknown District'}</td>
-                  <td className="px-6 py-4">{itemMap.get(stock.item_id) || 'Unknown Item'}</td>
-                  <td className="px-6 py-4">{stock.quantity}</td>
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => openModal(stock.district_id, stock.item_id, stock.quantity)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      <AiOutlineEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(stock.district_id, stock.item_id)}
-                      className="text-red-500 hover:text-red-700 ml-2"
-                    >
-                      <BsFillTrash3Fill />
-                    </button>
-                  </td>
+              {filteredStocks.length > 0 ? (
+                filteredStocks.map((stock) => (
+                  <tr key={`${stock.district_id}-${stock.item_id}`} className="border-b hover:bg-gray-50">
+                    <td className="px-6 py-4">{districts.find(district => district.id === stock.district_id)?.name || 'Unknown District'}</td>
+                    <td className="px-6 py-4">{items.find(item => item.id === stock.item_id)?.name || 'Unknown Item'}</td>
+                    <td className="px-6 py-4">{stock.quantity}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => openModal(stock.district_id, stock.item_id, stock.quantity)}
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        <AiOutlineEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(stock.district_id, stock.item_id)}
+                        className="text-red-500 hover:text-red-700 ml-2"
+                      >
+                        <BsFillTrash3Fill />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="px-6 py-4 text-center">No stock available for this item</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
 

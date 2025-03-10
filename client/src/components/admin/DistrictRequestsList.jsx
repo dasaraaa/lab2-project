@@ -5,10 +5,14 @@ import Swal from 'sweetalert2';
 
 const DistrictRequestsList = () => {
   const [districtRequests, setDistrictRequests] = useState([]);
+  const [filteredRequests, setFilteredRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
-
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  
   const handleApprove = async (requestId, currentStatus) => {
     if (currentStatus !== 'pending') {
       Swal.fire({
@@ -80,6 +84,7 @@ const DistrictRequestsList = () => {
       try {
         const response = await axios.get("http://localhost:5000/api/district-requests");
         setDistrictRequests(response.data);
+        setFilteredRequests(response.data);
       } catch (error) {
         console.error("Error fetching district requests:", error);
         setError("Failed to fetch district requests.");
@@ -93,14 +98,36 @@ const DistrictRequestsList = () => {
 
   // Sorting Functionality
   const sortDistrictRequests = () => {
-    const sortedRequests = [...districtRequests].sort((a, b) => {
+    const sortedRequests = [...filteredRequests].sort((a, b) => {
       return sortOrder === "asc"
         ? a.District.name.localeCompare(b.District.name) // Sort A-Z
         : b.District.name.localeCompare(a.District.name); // Sort Z-A
     });
-    setDistrictRequests(sortedRequests);
+    setFilteredRequests(sortedRequests);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Toggle sort order
   };
+
+  // Filtering by Status
+  const handleStatusFilter = (status) => {
+    setStatusFilter(status);
+    if (status === 'all') {
+      setFilteredRequests(districtRequests);
+    } else {
+      setFilteredRequests(districtRequests.filter(request => request.status === status));
+    }
+  };
+
+  // Search by name
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    const filtered = districtRequests.filter(request =>
+      request.District.name.toLowerCase().includes(e.target.value.toLowerCase()) || 
+      request.Item.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredRequests(filtered);
+  };
+
+
 
   if (loading) {
     return (
@@ -125,7 +152,7 @@ const DistrictRequestsList = () => {
         <div className="bg-white p-8 rounded-md w-full shadow-md">
           <h2 className="text-xl font-semibold mb-4">District Requests List</h2>
 
-          {/* Sorting Button above the table */}
+          {/* Sorting Button and Filters */}
           <div className="flex justify-between mb-4">
             <button
               className="text-white bg-green-600 hover:bg-green-700 p-2 rounded-lg"
@@ -133,7 +160,30 @@ const DistrictRequestsList = () => {
             >
               {sortOrder === "asc" ? "Sort A-Z" : "Sort Z-A"}
             </button>
+            
+            {/* Status Filter */}
+            <select
+              className="p-2 rounded-lg"
+              value={statusFilter}
+              onChange={(e) => handleStatusFilter(e.target.value)}
+            >
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+
+            
           </div>
+
+          {/* Search Bar */}
+          <input
+            type="text"
+            className="p-2 border rounded-md mb-4 w-full"
+            placeholder="Search by District or Item"
+            value={searchQuery}
+            onChange={handleSearch}
+          />
 
           <table className="w-full text-sm text-left text-gray-500">
             <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -147,8 +197,8 @@ const DistrictRequestsList = () => {
               </tr>
             </thead>
             <tbody>
-              {districtRequests.length > 0 ? (
-                districtRequests.map((request) => (
+              {filteredRequests.length > 0 ? (
+                filteredRequests.map((request) => (
                   <tr key={request.id} className="border-b hover:bg-gray-50">
                     <td className="px-6 py-4">{request.District.name}</td>
                     <td className="px-6 py-4">{request.Item.name}</td>

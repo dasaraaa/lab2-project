@@ -140,10 +140,10 @@ router.delete('/:id', async (req, res) => {
 });
 const checkStockNotifications = async () => {
   try {
-    // Get all items
+    
     const items = await Items.findAll();
 
-    // Loop through each item and check the stock levels
+    
     items.forEach(async (item) => {
       let notification = '';
 
@@ -153,11 +153,11 @@ const checkStockNotifications = async () => {
         notification = 'Stock exceeds the maximum level!';
       }
 
-      // If there's a notification, update the item's notification field
+      
       if (notification) {
         await item.update({ notification });
       } else {
-        await item.update({ notification: null }); // Clear notification if stock is fine
+        await item.update({ notification: null }); 
       }
     });
   } catch (err) {
