@@ -10,9 +10,7 @@ const services = [
   { id: 2, name: 'Furniture' },
   { id: 3, name: 'Library Resources' },
   { id: 4, name: 'Classroom Supplies' },
-
 ];
-
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -28,7 +26,6 @@ const Header = () => {
         if(response.data.error) {
           setAuthState({...authState, status: false});
         } else {
-          // Correct: setting status to true when authenticated
           setAuthState({name: response.data.name, id: response.data.id, status: true});
         }
         
@@ -49,8 +46,6 @@ const Header = () => {
           {/* <span className="color-blue-800 self-center text-2xl font-bold whitespace-nowrap">UBT</span> */}
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          
-           
         {!authState.status ? (
             <Link
               to="/signup"
@@ -59,7 +54,6 @@ const Header = () => {
               Get Started
             </Link>
           ) : (
-            
             <Button
               onClick={logout}
               to="/"
@@ -69,7 +63,6 @@ const Header = () => {
              
             </Button> 
           )}
-         
          <h1 className="text-lg font-semibold text-gray-700 dark:text-white   px-4 py-2 rounded-lg ">
             {authState.name}
           </h1>
@@ -124,37 +117,6 @@ const Header = () => {
               </Link>
             </li>
 
-        
-
-            {/* <li className="relative">
-              <button
-                type="button"
-                onClick={() => setServicesOpen(!servicesOpen)}
-                className="block py-2 px-3 text-gray-700 rounded md:bg-transparent md:p-0 hover:text-black flex items-center"
-              >
-                UBT Inventory
-                {servicesOpen ? (
-                  <FaChevronUp className="w-5 h-5 ml-1" aria-hidden="true" />
-                ) : (
-                  <FaChevronDown className="w-5 h-5 ml-1" aria-hidden="true" />
-                )}
-              </button>
-              {servicesOpen && (
-                <div className="absolute z-10 mt-2 w-48 rounded-lg bg-white shadow-lg">
-                  <div className="py-1">
-                    {services.map((item) => (
-                      <Link
-                        key={item.id}
-                        to={`/services/${item.id}`}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </li> */}
             <li>
               <Link
                 to="/contact"
@@ -166,7 +128,6 @@ const Header = () => {
           </ul>
         </div>
       </div>
-
       {/* Shopping Cart Slideover
       {cartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">

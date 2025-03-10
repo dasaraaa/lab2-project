@@ -24,6 +24,7 @@ import AdminSignUp from './pages/admin/AdminSignUp';
 import AdminSignIn from './pages/admin/AdminSignIn';
 import DistrictStock from './components/admin/DistrictStock';
 import Dashboard from './pages/admin/Dashboard';
+import Contract from "./components/admin/Contract"
 function App() {
   const [authState, setAuthState] = useState({name:"", id:0, status:false,});
   
@@ -56,6 +57,7 @@ function App() {
       <Route path='/adminSignUp' element={<AdminSignUp/>} />
       <Route path='/district-stock' element={<DistrictStock/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
+      <Route path='/contract' element={<Contract/>} />
 
        </Routes>
      </ModalProvider>

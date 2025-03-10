@@ -29,9 +29,9 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
       defaultValue: DataTypes.NOW
     }
   });
-  sequelize.sync()
-  .then(() => console.log('Orders table created'))
-  .catch(err => console.log('Error creating table:', err));
+  // sequelize.sync()
+  // .then(() => console.log('Orders table created'))
+  // .catch(err => console.log('Error creating table:', err));
 
   module.exports = Order;
   
