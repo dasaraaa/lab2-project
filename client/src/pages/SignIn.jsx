@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
-import {AuthContext} from "../helpers/AuthContext"
+import { AuthContext } from "../helpers/AuthContext";
+
 const SignIn = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate(); // Use useNavigate for redirection
-  const{setAuthState} = useContext(AuthContext)
+  const navigate = useNavigate();
+  const { setAuthState } = useContext(AuthContext);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -32,30 +34,39 @@ const SignIn = () => {
   };
 
   const signin = async () => {
-    const data = { email: formData.email, password: formData.password };
-  
     try {
-      const response = await axios.post('http://localhost:5000/auth/signin', data);
+      const response = await axios.post('http://localhost:5000/auth/signin', formData);
       if (response.data.error) {
         Swal.fire('Error', response.data.error, 'error');
-        return; 
+        return;
       }
-      const accessToken = response.data.accessToken; // Ensure the backend returns `accessToken`
+
+      const { accessToken, role, name, id } = response.data;
       if (!accessToken) {
         Swal.fire('Error', 'Invalid response from server.', 'error');
         return;
       }
+
+      // Ruaj të dhënat në localStorage
       localStorage.setItem("accessToken", accessToken);
-      setAuthState({name:"", id:0, status:true});
+      localStorage.setItem("role", role);
+
+      // Përditëso AuthState
+      setAuthState({ name, id, role, status: true });
+
       Swal.fire('Success', 'You are logged in!', 'success');
-      navigate('/'); // Redirect user after successful login
-  
+
+      // Ridrejto përdoruesin bazuar në rolin e tij
+      if (role === "admin") {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       Swal.fire('Error', error.response?.data?.error || 'Something went wrong. Please try again.', 'error');
     }
   };
-  
-  
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

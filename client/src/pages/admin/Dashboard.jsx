@@ -7,7 +7,6 @@ const Dashboard = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
   const [userCount, setUserCount] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
   const [recentOrders, setRecentOrders] = useState([]);
   const [totalOrderPrice, setTotalOrderPrice] = useState(0);
   const [notifications, setNotifications] = useState([]);
@@ -25,7 +24,6 @@ const Dashboard = () => {
         fetchItems(),
         fetchOrders(),
         fetchUserCount(),
-        fetchRevenue(),
         fetchRecentOrders(),
         fetchNotifications(),
       ]);
@@ -59,15 +57,6 @@ const Dashboard = () => {
       setUserCount(response.data.count);
     } catch (err) {
       console.error("Error fetching user count", err);
-    }
-  };
-
-  const fetchRevenue = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/orders/revenue");
-      setTotalRevenue(response.data.totalRevenue);
-    } catch (err) {
-      console.error("Error fetching revenue", err);
     }
   };
 
