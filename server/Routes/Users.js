@@ -2,27 +2,33 @@ const express = require("express");
 const router = express.Router();
 const { Users } = require("../Models/Users");
 const bcrypt = require("bcrypt");
-const {sign} = require("jsonwebtoken")
-const{validateToken} = require("../Middlewares/AuthMiddleware")
+const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../Middlewares/AuthMiddleware");
+
 // Registration Route
 router.post("/", async (req, res) => {
-  const { name, email, password, phoneNumber,role } = req.body;
-  
+  const { name, email, password, phoneNumber, role } = req.body;
+
   try {
-    // Hash the password before storing it
+    // Kontrollo nëse përdoruesi ekziston
+    const existingUser = await Users.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists!" });
+    }
+
+    // Hash passwordin për siguri
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create the user in the database
-    await Users.create({
-      name: name,
-      email: email,
+    // Krijo përdoruesin në databazë
+    const newUser = await Users.create({
+      name,
+      email,
       password: hashedPassword,
-      phoneNumber: phoneNumber,
-      role: role || 'staff'
+      phoneNumber,
+      role: role || "staff", // Roli default është "staff"
     });
 
-    // Send success response after the user is created
-    res.json("Successfully added!");
+    res.status(201).json({ message: "User successfully registered!", user: newUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error while creating user." });
@@ -33,49 +39,52 @@ router.post("/", async (req, res) => {
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if email is provided
-  if (!email) {
-    return res.json({ error: "User doesn't exist!" });
-  }
-
   try {
-    // Find the user by email
-    const user = await Users.findOne({ where: { email: email } });
-
-    // Check if user was found
+    // Gjej përdoruesin në databazë
+    const user = await Users.findOne({ where: { email } });
     if (!user) {
-      return res.json({ error: "User doesn't exist!" });
+      return res.status(404).json({ error: "User doesn't exist!" });
     }
-    // Compare the password with the hashed password
+
+    // Verifiko passwordin
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return res.json({ error: "Wrong email/password combination!" });
+      return res.status(401).json({ error: "Wrong email/password combination!" });
     }
-    const accessToken = sign({name: user.name, id:user.id, role: user.role}, 
+
+    // Gjenero token-in e autentifikimit
+    const accessToken = sign(
+      { id: user.id, name: user.name, role: user.role },
       "importantsecret",
       { expiresIn: "1h" }
-    )
-    // If password matches, send success response
-    return res.status(200).json({ message: "Logged in successfully" , accessToken});
+    );
+
+    // Kthe përgjigjen me token dhe rolin e përdoruesit
+    return res.status(200).json({
+      message: "Logged in successfully",
+      accessToken,
+      role: user.role, // Kthejmë rolin që frontend-i ta përdorë
+    });
   } catch (error) {
-    // Handle any unexpected errors
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
-
 });
-router.get("/auth", validateToken, (req,res) => {
-  res.json(req.user);
-})
+
+// Endpoint për të verifikuar nëse një përdorues është i loguar dhe cili është roli i tij
+router.get("/auth", validateToken, (req, res) => {
+  res.json({ id: req.user.id, name: req.user.name, role: req.user.role });
+});
+
+// Endpoint për të marrë numrin total të përdoruesve
 router.get("/count", async (req, res) => {
   try {
-    const userCount = await Users.count(); // Sequelize count method
+    const userCount = await Users.count();
     res.json({ count: userCount });
   } catch (error) {
     console.error("Error fetching user count:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 module.exports = router;
