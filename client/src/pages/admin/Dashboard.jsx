@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaUser, FaBox, FaShoppingCart, FaBell } from "react-icons/fa";
 import Sidebar from '../../components/admin/Sidebar';
-
 const Dashboard = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
   const [userCount, setUserCount] = useState(0);
-  const [recentOrders, setRecentOrders] = useState([]);
+  const [recentOrders,  setRecentOrders] = useState([]);
   const [totalOrderPrice, setTotalOrderPrice] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +52,7 @@ const Dashboard = () => {
 
   const fetchUserCount = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/auth/count");
+      const response =   await axios.get("http://localhost:5000/auth/count");
       setUserCount(response.data.count);
     } catch (err) {
       console.error("Error fetching user count", err);
