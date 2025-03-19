@@ -50,6 +50,8 @@ const Sidebar = () => {
     { name: "Supplier", link: "/supplier", icon: MdEmojiTransportation },
     { name: "District Stock", link: "/district-stock", icon: GiShoppingBag },
     { name: "Orders", link: "/orders", icon: GiShoppingBag },
+    { name: "Invoice Management", link: "/invoice",icon: MdProductionQuantityLimits  }
+
   ];
 
   // Staff menu items (for non-admin users)
@@ -141,7 +143,6 @@ const Sidebar = () => {
             )}
           </div>
         </div>
-
         {/* Sign Out Button */}
         <button
           onClick={handleSignOut}
@@ -150,7 +151,6 @@ const Sidebar = () => {
           Sign Out
         </button>
       </div>
-
       {/* Notification Popup */}
       {notification && (
         <div className="notification-popup">

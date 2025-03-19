@@ -40,13 +40,11 @@ const SignIn = () => {
         Swal.fire('Error', response.data.error, 'error');
         return;
       }
-
       const { accessToken, role, name, id } = response.data;
       if (!accessToken) {
         Swal.fire('Error', 'Invalid response from server.', 'error');
         return;
       }
-
       // Ruaj të dhënat në localStorage
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("role", role);
